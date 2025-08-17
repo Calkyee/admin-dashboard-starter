@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en" className="min-w-screen min-h-screen flex flex-col">
       <body
         
-        className="flex-1 flex flex-row"
+        className="flex-1 flex flex-row bg-[#CCCCCC]"
       >
         <SideNav />
         {children}
