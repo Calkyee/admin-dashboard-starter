@@ -1,19 +1,13 @@
- import type { Metadata } from "next";
+'use client'; 
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 // import components here 
 import SideNav from '@/components/SideNav';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { SessionProvider } from "next-auth/react";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -31,8 +25,10 @@ export default function RootLayout({
         
         className="flex-1 flex flex-row bg-[#CCCCCC]"
       >
-        <SideNav />
-        {children}
+        <SessionProvider>
+          <SideNav />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
