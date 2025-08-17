@@ -1,12 +1,10 @@
-'use client'; 
-import type { Metadata } from "next";
+ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 // import components here 
 import SideNav from '@/components/SideNav';
 
-import { SessionProvider } from "next-auth/react";
 
 
 export const metadata: Metadata = {
@@ -25,10 +23,9 @@ export default function RootLayout({
         
         className="flex-1 flex flex-row bg-[#CCCCCC]"
       >
-        <SessionProvider>
+
           <SideNav />
           {children}
-        </SessionProvider>
       </body>
     </html>
   );
