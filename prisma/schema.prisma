@@ -8,19 +8,20 @@ datasource db {
 }
 
 model User {
-  id    String @id @map("_id") @default(auto()) @db.ObjectId
-  email String @unique
-  name  String
-  role  Role   @default(USER)
+  id       String   @id @map("_id") @default(auto()) @db.ObjectId
+  email    String   @unique
+  name     String
+  role     Role     @default(USER)
 
-  // optional one-to-one relation
-  admin Admin?
+  accounts Account[]
+  admin    Admin?
+  sessions Session[]   // 👈 fixes the missing relation
 }
 
 model Admin {
-  id          String @id @map("_id") @default(auto()) @db.ObjectId
-  userId      String @unique @db.ObjectId
-  user        User   @relation(fields: [userId], references: [id])
+  id          String        @id @map("_id") @default(auto()) @db.ObjectId
+  userId      String        @unique @db.ObjectId
+  user        User          @relation(fields: [userId], references: [id])
   permissions Permissions[]
 }
 
@@ -34,4 +35,42 @@ enum Permissions {
 enum Role {
   USER
   ADMIN
+}
+
+model Account {
+  id                String  @id @map("_id") @default(auto()) @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @map("_id") @default(auto()) @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  id         String   @id @map("_id") @default(auto()) @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@index([identifier, token])
 }
