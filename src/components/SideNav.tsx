@@ -1,5 +1,5 @@
 import React from 'react'
-import SideNavButton from '@/components/Nav/SideNavButton'; 
+import SideNavButton from '@/components/NavComponents/SideNavButton'; 
 
 const SideNav = () => {
   return (
