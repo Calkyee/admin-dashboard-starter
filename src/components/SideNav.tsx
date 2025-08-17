@@ -18,6 +18,9 @@ const SideNav = () => {
       <SideNavButton href='/users'>
         Users
       </SideNavButton>
+      <SideNavButton href='/admins'>
+        Administrators
+      </SideNavButton>
 
     </nav>
   )
