@@ -11,7 +11,9 @@ const layout = ({children}: Props) => {
      flex-1 flex flex-col 
     '>
       <TopNav />  
-      {children}
+      <div>
+        {children}
+      </div>
     </div>
   )
 }
