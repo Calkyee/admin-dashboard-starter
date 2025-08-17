@@ -1,3 +1,4 @@
+// prisma/seed.ts
 import { PrismaClient } from "@prisma/client";
 import { hash } from "bcrypt";
 
@@ -22,27 +23,16 @@ async function main() {
       email,
       name: "Root Admin",
       role: "ADMIN",
+      passwordHash: hashedPassword,   // 👈 store hash directly on User
+      admin: {
+        create: {
+          permissions: ["READ", "WRITE", "DELETE", "UPDATE"],
+        },
+      },
     },
   });
 
-  await prisma.account.create({
-    data: {
-      userId: user.id,
-      provider: "credentials",
-      providerAccountId: email,
-      type: "credentials",
-      access_token: hashedPassword,
-    },
-  });
-
-  await prisma.admin.create({
-    data: {
-      userId: user.id,
-      permissions: ["READ", "WRITE", "DELETE", "UPDATE"],
-    },
-  });
-
-  console.log("✅ Root user created:", email);
+  console.log("✅ Root user created:", user.email);
 }
 
 main()
@@ -50,6 +40,4 @@ main()
     console.error("❌ Seed failed:", e);
     process.exit(1);
   })
-  .finally(() => {
-    prisma.$disconnect();
-  });
+  .finally(() => prisma.$disconnect());

@@ -8,20 +8,22 @@ datasource db {
 }
 
 model User {
-  id       String   @id @map("_id") @default(auto()) @db.ObjectId
-  email    String   @unique
-  name     String
-  role     Role     @default(USER)
+  id           String   @id @map("_id") @default(auto()) @db.ObjectId
+  email        String   @unique
+  name         String
+  role         Role     @default(USER)
+  passwordHash String?   // 👈 this is the field
 
   accounts Account[]
   admin    Admin?
-  sessions Session[]   // 👈 fixes the missing relation
+  sessions Session[]
 }
+
 
 model Admin {
   id          String        @id @map("_id") @default(auto()) @db.ObjectId
   userId      String        @unique @db.ObjectId
-  user        User          @relation(fields: [userId], references: [id])
+  user        User?         @relation(fields: [userId], references: [id])
   permissions Permissions[]
 }
 

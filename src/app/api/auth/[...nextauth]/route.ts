@@ -16,26 +16,27 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
-          throw new Error("Missing Email or Password");
+          return null;
         }
 
+        // 👇 explicitly select passwordHash so TS knows it exists
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            role: true,
+            passwordHash: true,
+          },
         });
 
-        if (!user) throw new Error("No user found");
+        if (!user?.passwordHash) return null;
 
-        const account = await prisma.account.findFirst({
-          where: { userId: user.id, provider: "credentials" },
-        });
+        const isValid = await compare(credentials.password, user.passwordHash);
+        if (!isValid) return null;
 
-        if (!account || !account.access_token) {
-          throw new Error("No credentials or password found");
-        }
-
-        const isValid = await compare(credentials.password, account.access_token);
-        if (!isValid) throw new Error("Invalid password");
-
+        // ✅ return only safe fields (exclude passwordHash)
         return {
           id: user.id,
           name: user.name,
@@ -45,6 +46,11 @@ const handler = NextAuth({
       },
     }),
   ],
+  session: { strategy: "jwt" },
+  secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/login",
+  },
 });
 
 export { handler as GET, handler as POST };
