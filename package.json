@@ -31,8 +31,11 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
+    "prisma-zod-generator": "^1.12.4",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "zod": "^4.0.17",
+    "zod-prisma-types": "^3.2.4"
   }
 }
