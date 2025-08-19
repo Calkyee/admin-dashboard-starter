@@ -11,11 +11,6 @@ const SignUpSchema = UserSchema.pick({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-const saveUserSchema = UserSchema.pick({ 
-  email: true, 
-  name: true, 
-  passwordHash: true
-})
 type SignUpInput = z.infer<typeof SignUpSchema> 
 
 const prisma: PrismaClient = new PrismaClient(); 
