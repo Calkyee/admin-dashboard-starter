@@ -8,7 +8,7 @@ const SignUpSchema = UserSchema.pick({
   email: true,
   name: true,
 }).extend({
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string().min(4, "Password must be at least 4 characters"),
 });
 
 type SignUpInput = z.infer<typeof SignUpSchema> 
