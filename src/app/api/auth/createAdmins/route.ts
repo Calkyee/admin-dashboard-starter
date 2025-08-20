@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import {Permissions, PrismaClient, Role} from '@prisma/client'; 
+import {Permissions, Role} from '@prisma/client'; 
+import { prisma } from "@/lib/store/prisma"; 
 import { hash } from 'bcrypt'; 
 import { ZodError, z } from "zod";
 import { UserSchema } from "@/zod";
@@ -12,8 +13,6 @@ const SignUpSchema = UserSchema.pick({
 });
 
 type SignUpInput = z.infer<typeof SignUpSchema> 
-
-const prisma: PrismaClient = new PrismaClient(); 
 
 export async function POST(request: NextRequest){ 
   try{
