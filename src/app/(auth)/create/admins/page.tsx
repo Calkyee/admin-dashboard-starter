@@ -62,15 +62,8 @@ const page = () => {
     text-red-500
   `
   : ``
-  const buttonClasses = error 
-  ? `
-  mt-12
-  w-full h-fit bg-[#38404F]  
-  text-white font-bold text-2xl p-2 rounded-lg 
-  hover:cursor-not-allowed
-  hover:bg-red-900 duration-100 ease-in-out    
+  const buttonClasses = 
   `
-  : `
   mt-12
   w-full h-fit bg-[#38404F] 
   text-white font-bold text-2xl p-2 rounded-lg 
