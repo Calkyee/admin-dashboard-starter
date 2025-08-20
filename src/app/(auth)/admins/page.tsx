@@ -1,7 +1,34 @@
-import React from 'react'
+'use client'; 
+import React, { useEffect, useState, useTransition } from 'react'
 import Link from 'next/link' 
 
+import { UserSchema } from '@/zod';
+import { z } from 'zod';
+type userType = z.infer<typeof UserSchema>
+
 const page = () => {
+  const [admins, setAdmins] = useState<userType[] | null>(null); 
+  const [error, setError] = useState(''); 
+  const [isLoading, setIsLoading] = useState<boolean>(true); 
+
+  useEffect(()=>{ 
+    // Load on page loading 
+    const fetchAdmins = async()=>{ 
+      const res = await fetch('/api/auth/getAdmins'); 
+      if(!res.ok){ 
+        setIsLoading(false) 
+        setError('Unable to retrieve admins'); 
+        return; 
+      }
+      const data = await res.json(); 
+
+      setIsLoading(false); 
+      setError(''); 
+      setAdmins(data.admins); 
+    }
+    fetchAdmins(); 
+  }, [])  
+
   const ButtonClassNames = 
   `
     flex justify-center
@@ -23,8 +50,8 @@ const page = () => {
     ">
     </div>
     <div className="bg-white shadow-lg p-4 rounded col-span-2 row-span-2">Card 5</div>
-    <div className="bg-white shadow-lg p-4 rounded col-span-2 row-span-4 flex flex-col">
-      <div className='flex-1 flex flex-row gap-2 text-center'>
+    <div className="bg-white shadow-lg p-4 rounded col-span-2 row-span-4 flex flex-col gap-5">
+      <div className='max-h-fit min-w-full flex flex-row gap-2 text-center'>
         <div className={ButtonClassNames}>
         <Link href='/create/admins'>Create Admin</Link>
       </div>
@@ -37,6 +64,20 @@ const page = () => {
       <div className={ButtonClassNames}>
         <Link href='/create/admins'>Delete Admin</Link>
       </div>
+      </div>
+      <div className='flex flex-1 gap-4 flex-col'>
+        <h2>Admins</h2>
+        {isLoading && <p>Loading admins..</p>}
+        {error && <p className='text-red-500'>{error}</p>}
+        {admins && admins.length > 0 && ( 
+          <ul>
+            {
+              admins.map((admin)=> (
+                <h2 className='font-bold' key={admin.id}>{admin.email}</h2>
+              ))
+            }
+          </ul>
+        )}
       </div>
     </div>
     <div className="bg-white shadow-lg p-4 rounded col-span-2 row-span-2">Card 6</div>
