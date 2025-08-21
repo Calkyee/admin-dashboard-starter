@@ -59,7 +59,7 @@ const page = () => {
         <Link href='/create/admins'>Read Admin</Link>
       </div>
       <div className={ButtonClassNames}>
-        <Link href='/create/admins'>Update Admins</Link>
+        <Link href='/create/admins'>Update Admin</Link>
       </div>
       <div className={ButtonClassNames}>
         <Link href='/create/admins'>Delete Admin</Link>
@@ -73,7 +73,19 @@ const page = () => {
           <ul>
             {
               admins.map((admin)=> (
-                <h2 className='font-bold' key={admin.id}>{admin.email}</h2>
+                <div 
+                key={admin.id}
+                className='
+                 flex flex-row align-middle justify-between
+                 p-2
+                 rounded-md 
+                 hover:bg-gray-300 
+                '>
+                  <h2 className='
+                  font-bold
+                '>{admin.email}</h2>
+                  <h2>▼</h2>
+                </div>
               ))
             }
           </ul>
