@@ -56,10 +56,10 @@ const page = () => {
         <Link href='/create/admins'>Create Admin</Link>
       </div>
       <div className={ButtonClassNames}>
-        <Link href='/create/admins'>Edit Admin</Link>
+        <Link href='/create/admins'>Read Admin</Link>
       </div>
       <div className={ButtonClassNames}>
-        <Link href='/create/admins'>Update Admin</Link>
+        <Link href='/create/admins'>Update Admins</Link>
       </div>
       <div className={ButtonClassNames}>
         <Link href='/create/admins'>Delete Admin</Link>
