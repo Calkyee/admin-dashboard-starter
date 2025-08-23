@@ -4,13 +4,19 @@ import Link from 'next/link'
 
 import { UserSchema } from '@/zod';
 import { z } from 'zod';
+
 type userType = z.infer<typeof UserSchema>
+
 
 const page = () => {
   const [admins, setAdmins] = useState<userType[] | null>(null); 
   const [error, setError] = useState(''); 
   const [isLoading, setIsLoading] = useState<boolean>(true); 
   const [expandedAdminId, setExpandedAdminId] = useState<string | null>(null);
+  const [editingField, setEditingField] = useState<{
+    adminId: string; 
+    field: "name" | "email" |"password"; 
+  } | null>(null); 
 
   useEffect(()=>{ 
     // Load on page loading 
@@ -43,15 +49,14 @@ const page = () => {
   `
 
   const h2ClassNames = `
-    border-1 border-black rounded-2xl p-2
+    border border-black rounded-2xl p-2
     font-bold
-    hover:cursor-pointer
-    whitespace-normal break-words 
+    whitespace-normal break-words
   `
 
   return (
     <>
-    <div className="bg-white shadow-lg p-4 rounded col-span-1 row-span-2">Card 1</div>
+    <div className="bg-white shadow-lg p-4 rounded col-span-1 row-span-2 ">Card 1</div>
     <div className="bg-white shadow-lg p-4 rounded col-span-1 row-span-2">Card 2</div>
     <div className="bg-white shadow-lg p-4 rounded col-span-1 row-span-2">Card 3</div>
     <div className="
@@ -114,16 +119,88 @@ const page = () => {
                               <h2 className={h2ClassNames}>{admin.id}</h2>
                             </div>
                             <div>
-                              <label className={LabelClassNames}>Email</label>
-                              <h2 className={h2ClassNames}>{admin.email}</h2>
+                              { editingField?.adminId === admin.id && editingField.field === 'email' ? ( 
+                                <div className='flex flex-col w-full'>
+                                  <label className={LabelClassNames}>Email</label>
+                                  <input 
+                                    type="text" 
+                                    className={h2ClassNames}
+                                    defaultValue={admin.email}
+                                    onBlur={()=>setEditingField(null)}
+                                  />
+                                </div>
+                              )
+                              : ( 
+                                <>
+                                  <label className={LabelClassNames}>Email</label>
+                                  <h2 
+                                    className={h2ClassNames}
+                                    onClick={()=> 
+                                    setEditingField({ 
+                                      adminId: admin.id, 
+                                      field: 'email'
+                                    })
+                                  }
+                                  >
+                                    {admin.email}
+                                  </h2>
+                                </>
+                              )
+                              }
                             </div>
                             <div>
-                              <label className={LabelClassNames}>Name</label>
-                              <h2 className={h2ClassNames}>{admin.name}</h2>
+                              { editingField?.adminId === admin.id && editingField.field === 'name' ? ( 
+                                <div className='flex flex-col w-full'>
+                                  <label className={LabelClassNames}>Name</label>
+                                  <input 
+                                      type="text" 
+                                      className={h2ClassNames}
+                                      defaultValue={admin.name}
+                                      onBlur={()=>setEditingField(null)}
+                                  />
+                                </div>
+                              )
+                              : ( 
+                                <div className='flex flex-col w-full'>
+                                  <label className={LabelClassNames}>Name</label>
+                                  <h2 
+                                    onClick={()=> 
+                                      setEditingField({ 
+                                        adminId: admin.id, 
+                                        field: 'name'
+                                      })
+                                    }
+                                    className={h2ClassNames}>{admin.name}</h2>
+                                </div>
+                              )
+
+                              }
                             </div>
                             <div>
-                              <label className={LabelClassNames}>Password</label>
-                              <h2 className={h2ClassNames}>{admin.passwordHash}</h2>
+                              { editingField?.adminId === admin.id && editingField.field === 'password' ? ( 
+                                <div className='flex flex-col w-full'>
+                                  <label className={LabelClassNames}>Password</label>
+                                  <input type="text" 
+                                    className={h2ClassNames}
+                                    defaultValue={admin.passwordHash ?? ""}
+                                    onBlur={()=>setEditingField(null)}
+                                  />
+                                </div>
+                              )
+                              : ( 
+                                <div className='flex flex-col w-full'>
+                                  <label className={LabelClassNames}>Password</label>
+                                  <h2
+                                    onClick={()=> 
+                                      setEditingField({ 
+                                        adminId: admin.id, 
+                                        field: 'password'
+                                      })
+                                    } 
+                                    className={h2ClassNames}>{admin.passwordHash ?? ""}</h2>
+                                </div>
+                              )
+                              }
                             </div>
                           </form>
                           )
