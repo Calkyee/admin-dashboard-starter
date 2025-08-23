@@ -16,7 +16,6 @@ export async function GET(request: NextRequest){
       error: "No admins found"
     }, {status: 404}); 
 
-
     return NextResponse.json({ 
       message: "Successfully found admins", 
       admins

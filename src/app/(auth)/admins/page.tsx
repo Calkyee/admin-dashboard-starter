@@ -25,6 +25,7 @@ const page = () => {
       setIsLoading(false); 
       setError(''); 
       setAdmins(data.admins); 
+      console.log('[ADMINS]: ', data.admins);
     }
     fetchAdmins(); 
   }, [])  
