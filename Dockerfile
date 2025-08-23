@@ -11,4 +11,4 @@ RUN npx prisma generate
 
 EXPOSE 3000
 
-CMD ["./entrypoint.sh"]
+CMD ["SH","./entrypoint.sh"]
