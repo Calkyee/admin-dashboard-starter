@@ -4,7 +4,6 @@ services:
   web:
     build: .
     container_name: app_dashboard_web
-    command: npm run dev:docker
     ports:
       - "3000:3000"
     volumes:

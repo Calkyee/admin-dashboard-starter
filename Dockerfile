@@ -3,7 +3,6 @@ FROM node:23.6.1-alpine
 WORKDIR /app 
 
 COPY package*.json ./ 
-
 RUN npm install 
 
 COPY . . 
@@ -12,4 +11,4 @@ RUN npx prisma generate
 
 EXPOSE 3000
 
-CMD sh -c "npx prisma db push && npx prisma db seed && npm run dev:docker"
+CMD ["./entrypoint.sh"]
