@@ -12,4 +12,4 @@ RUN npx prisma generate
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev:docker"]
+CMD sh -c "npx prisma db push && npx prisma db seed && npm run start"
