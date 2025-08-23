@@ -1,18 +1,21 @@
 #!/bin/sh
 set -e
 
-echo "⏳ Waiting for Mongo..."
-until nc -z mongo 27017; do
-  sleep 1
-done
-
-echo "✅ Mongo is ready. Running Prisma..."
+if [ "$NODE_ENV" = "development" ]; then
+  echo "⏳ Waiting for Mongo (local compose)..."
+  until nc -z mongo 27017; do
+    sleep 1
+  done
+  echo "✅ Local Mongo is ready."
+fi
 
 echo "➡️ Running db push..."
-npx prisma db push || { echo "❌ db push failed"; exit 1; }
+npx prisma db push
 
-echo "➡️ Running db seed..."
-npx prisma db seed || { echo "❌ db seed failed"; exit 1; }
+if [ "$NODE_ENV" = "development" ]; then
+  echo "➡️ Running db seed..."
+  npx prisma db seed
+fi
 
 echo "🚀 Starting Next.js..."
 npm run dev:docker
