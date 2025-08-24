@@ -52,12 +52,14 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = (user as UserType).role ?? "ADMIN";
-      token.id = (user as UserType).id; 
-      token.role = (user as UserType).role; 
-      token.email = user.email;  
+      if(user){ 
+        if (user) token.role = (user as UserType).role ?? "ADMIN";
+        token.id = (user as UserType).id; 
+        token.role = (user as UserType).role; 
+        token.email = user.email;  
       if("ADMIN" in user){ 
         token.permissions = (user as any).admin?.permissions ?? []; 
+      }
       }
 
       return token;
