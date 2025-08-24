@@ -6,7 +6,7 @@ import { SessionProvider } from "next-auth/react";
 
 // import components here 
 import SideNav from '@/components/SideNav';
-
+import SecureRoutes from '@/app/(auth)/layout'; 
 
 
 // export const metadata: Metadata = {
@@ -27,7 +27,9 @@ export default function RootLayout({
       >
         <SessionProvider>
           <SideNav />
-          {children}
+          <SecureRoutes>
+            {children}
+          </SecureRoutes>
         </SessionProvider>
       </body>
     </html>
