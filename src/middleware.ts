@@ -1,21 +1,24 @@
+// middleware.ts
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
 
-export async function middleware(req: NextRequest){ 
-  const token = await getToken({req, secret: process.env.AUTH_SECRET}); 
-  if(!token){ 
-    return NextResponse.json({ 
-      error: "Unauthorised"
-    }, {status: 401, headers: {"Content-Type": "application/json"}})
+export async function middleware(req: NextRequest) {
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+
+  // only guard /api/secure routes
+  if (req.nextUrl.pathname.startsWith("/api/secure")) {
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    if ((token as any).role !== "ADMIN") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
   }
-  return NextResponse.next(); 
+
+  return NextResponse.next();
 }
 
-// backend routes only, frontend is already secured
-export const config = { 
-  matcher: [ 
-    "/app/api/createAdmins/:path*", 
-    "/app/api/getAdmins/:path*"
-  ]
-}; 
+export const config = {
+  matcher: ["/api/secure/:path*"],
+};

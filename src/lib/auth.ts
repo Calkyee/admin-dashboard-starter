@@ -3,6 +3,10 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/store/prisma";
 import { compare } from "bcrypt";
+import { UserSchema } from "@/zod"; 
+import { z } from "zod";
+
+type UserType = z.infer<typeof UserSchema>;
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
@@ -26,14 +30,28 @@ export const authOptions: NextAuthOptions = {
         const ok = await compare(credentials.password, user.passwordHash);
         if (!ok) return null;
 
+        // ✅ validate with Zod schema
+        const parsed = UserSchema.safeParse(user);
+        if (!parsed.success) {
+          console.error("User validation failed:", parsed.error.format());
+          return null;
+        }
+
+        const validUser: UserType = parsed.data;
+
         // only safe fields
-        return { id: user.id, name: user.name, email: user.email, role: user.role };
+        return {
+          id: validUser.id,
+          name: validUser.name,
+          email: validUser.email,
+          role: validUser.role,
+        };
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = (user as any).role ?? "user";
+      if (user) token.role = (user as UserType).role ?? "ADMIN";
       return token;
     },
     async session({ session, token }) {

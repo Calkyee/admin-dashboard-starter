@@ -21,13 +21,20 @@ const page = () => {
   useEffect(()=>{ 
     // Load on page loading 
     const fetchAdmins = async()=>{ 
-      const res = await fetch('/api/auth/getAdmins'); 
+      const res = await fetch('/api/secure/admins/getAdmins', { credentials: 'include'});
+      // const rawText = await res.text(); 
+      // if(rawText){ 
+      //   console.log('[RAW RESPONSE]: ', rawText)
+      // }
+      const data = await res.json(); 
+
+       
+      console.log('[FETCH ADMINS ERROR]: ', data); 
       if(!res.ok){ 
         setIsLoading(false) 
         setError('Unable to retrieve admins'); 
         return; 
       }
-      const data = await res.json(); 
       const admins: userType[] = data.admins; 
       setIsLoading(false); 
       setError(''); 

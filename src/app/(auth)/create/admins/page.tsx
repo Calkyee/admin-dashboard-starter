@@ -27,12 +27,13 @@ const page = () => {
       return; 
     }
 
-    const res = await fetch('/api/auth/createAdmins', { 
+    const res = await fetch('/api/secure/admins/createAdmins', { 
       method: "POST", 
       body: JSON.stringify(result.data), 
       headers: { 
         'Content-Type': 'application/json'
-      }
+      }, 
+      credentials: 'include'
     }); 
 
     const data = await res.json(); 
