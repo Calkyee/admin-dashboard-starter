@@ -14,18 +14,32 @@ const layout = ({children}: Props) => {
   const {data, status} = useSession();   
   
   useEffect(()=>{ 
-    console.log('[USER  DATA]: ', data); 
+    console.log('[USER  DATA]: ', data);
+    if(status === 'loading') return;  
     if(status === 'unauthenticated'){ 
-      router.push('/login'); 
-    }
-    if(params === '/login' && status === 'authenticated'){ 
-      router.push('/'); 
+      return router.push('/login'); 
     }
   }, [status, router]); 
   
-  return (
-    <>{children}</>
-  )
+  if(status === 'loading'){ 
+    return (
+      <div>
+        loading...
+      </div>
+    )
+  }else if(status === 'unauthenticated' && params === '/login'){ 
+    return ( 
+      <>
+        {children}
+      </>
+    )
+  }else if(status === 'authenticated'){ 
+    return ( 
+      <>
+        {children}
+      </>
+    )
+  }
 }
 
 export default layout
