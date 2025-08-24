@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
-          select: { id: true, email: true, name: true, role: true, passwordHash: true },
+          select: { id: true, email: true, name: true, role: true, passwordHash: true, admin: {select: { permissions: true}} },
         });
         if (!user?.passwordHash) return null;
 
@@ -45,6 +45,7 @@ export const authOptions: NextAuthOptions = {
           name: validUser.name,
           email: validUser.email,
           role: validUser.role,
+          admin: user.admin
         };
       },
     }),
@@ -52,6 +53,13 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) token.role = (user as UserType).role ?? "ADMIN";
+      token.id = (user as UserType).id; 
+      token.role = (user as UserType).role; 
+      token.email = user.email;  
+      if("ADMIN" in user){ 
+        token.permissions = (user as any).admin?.permissions ?? []; 
+      }
+
       return token;
     },
     async session({ session, token }) {
