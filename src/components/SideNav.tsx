@@ -5,7 +5,7 @@ import SideNavButton from '@/components/NavComponents/SideNavButton';
 
 
 const SideNav = () => {
-  const {data, status} = useSession(); 
+  const {status} = useSession(); 
   const isloading = status === 'unauthenticated';  
   return (
     <nav className='

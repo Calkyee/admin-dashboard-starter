@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode
 }
 
-const layout = ({children}: Props) => {
+const Layout = ({children}: Props) => {
   return (
     <div className='
      flex-1 flex flex-col 
@@ -18,4 +18,4 @@ const layout = ({children}: Props) => {
   )
 }
 
-export default layout
+export default Layout;

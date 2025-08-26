@@ -10,9 +10,7 @@ services:
       - .:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
-      - TURBOPACK_WATCH_MODE=poll
-      - TURBOPACK_POLL_INTERVAL=500
+      - NODE_ENV=production
 
     stdin_open: true
     tty: true

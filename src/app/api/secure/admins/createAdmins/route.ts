@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import {Permissions, Role} from '@prisma/client'; 
+import {Permissions} from '@prisma/client'; 
 import { prisma } from "@/lib/store/prisma"; 
 import { hash } from 'bcrypt'; 
 import { ZodError, z } from "zod";

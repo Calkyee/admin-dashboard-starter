@@ -58,14 +58,14 @@ export const authOptions: NextAuthOptions = {
         token.role = (user as UserType).role; 
         token.email = user.email;  
       if("ADMIN" in user){ 
-        token.permissions = (user as any).admin?.permissions ?? []; 
+        token.permissions = (user as { admin?: { permissions: string[] } }).admin?.permissions ?? [];
       }
       }
 
       return token;
     },
     async session({ session, token }) {
-      (session.user as any).role = token.role;
+      (session.user as {role?: string}).role = token.role as string; 
       return session;
     },
   },

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import z, { ZodError } from "zod";
+import { ZodError } from "zod";
 
 import passwordHash from '@/lib/hashing/passwordHash'; 
 import { prisma } from '@/lib/store/prisma'; 
@@ -12,8 +12,6 @@ const UserInputSchema = UserSchema.pick({
   passwordHash: true, 
   id: true 
 }); 
-
-type UserType = z.infer<typeof UserSchema> 
 
 export async function PUT(request: NextRequest){ 
   try{
@@ -47,7 +45,7 @@ export async function PUT(request: NextRequest){
       data: { 
         ...(validatedUser.email && {email: validatedUser.email}), 
         ...(validatedUser.name && {name: validatedUser.name}), 
-        ...(validatedUser.passwordHash && {passwordHash: await passwordHash(validatedUser.passwordHash)})
+        ...(validatedUser.passwordHash && {passwordHash: hashedPassword})
       }
     }); 
     return NextResponse.json({ 

@@ -8,7 +8,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const layout = ({children}: Props) => {
+const Layout = ({children}: Props) => {
   const router = useRouter();
   const params = usePathname();  
   const {data, status} = useSession();   
@@ -19,7 +19,7 @@ const layout = ({children}: Props) => {
     if(status === 'unauthenticated'){ 
       return router.push('/login'); 
     }
-  }, [status, router]); 
+  }, [data, status, router]); 
   
   if(status === 'loading'){ 
     return (
@@ -42,4 +42,4 @@ const layout = ({children}: Props) => {
   }
 }
 
-export default layout
+export default Layout;

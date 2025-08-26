@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { UserSchema } from '@/zod';
 import { z } from 'zod';
-import { setMaxIdleHTTPParsers } from 'http';
 
 type userType = z.infer<typeof UserSchema>;
 

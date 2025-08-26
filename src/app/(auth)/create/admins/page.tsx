@@ -9,7 +9,7 @@ const AccountSchema = UserSchema.pick({
   password: z.string().min(4, "Password must be at least 4 characters"),
 }); 
 
-const page = () => {
+const Page = () => {
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState(''); 
   const [name, setName] = useState(''); 
@@ -107,4 +107,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

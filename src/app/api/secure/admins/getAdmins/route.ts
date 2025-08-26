@@ -1,12 +1,9 @@
-import {NextRequest, NextResponse} from 'next/server'; 
-import { Permissions } from "@prisma/client"; 
+import {NextResponse} from 'next/server'; 
 import {prisma} from '@/lib/store/prisma'; 
-import {hash} from 'bcrypt'; 
-import {ZodError, z} from 'zod'; 
-import { UserSchema } from "@/zod"; 
+import {ZodError} from 'zod'; 
 
 // This seems way to easy 😭
-export async function GET(request: NextRequest){ 
+export async function GET(){ 
   try{
     const admins = await prisma.user.findMany({ 
       where: {role: 'ADMIN'}

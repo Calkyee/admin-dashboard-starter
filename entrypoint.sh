@@ -12,10 +12,15 @@ fi
 echo "➡️ Running db push..."
 npx prisma db push
 
-if [ "$NODE_ENV" = "development" ]; then
-  echo "➡️ Running db seed..."
-  npx prisma db seed
-fi
+echo "➡️ Running db seed..."
+npx prisma db seed
 
 echo "🚀 Starting Next.js..."
-npm run dev:docker
+if [ "$NODE_ENV" = "development" ]; then
+  echo "📦 Starting development server..."
+  npm run dev:docker
+else
+  echo "📦 Building and starting production server..."
+  npm run build
+  npm run start
+fi

@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function SideNavLink({ href, children, exact = false , isLoading}: Props) {
-  const {data, status} = useSession(); 
+  const {status} = useSession(); 
     
   const pathname = usePathname();
   const isActive = exact ? pathname === href : pathname.startsWith(href);
