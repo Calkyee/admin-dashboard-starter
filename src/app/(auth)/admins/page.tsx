@@ -1,12 +1,6 @@
-'use client'; 
 import React from 'react'
- 
-
-import { UserSchema } from '@/zod';
-import { z } from 'zod';
 import AdminCard from '@/components/Cards/AdminCard';
 
-type userType = z.infer<typeof UserSchema>
 
 
 const page = () => {
