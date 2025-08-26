@@ -1,14 +1,24 @@
-FROM node:23.6.1-alpine
+# Base
+FROM node:23.6.1-alpine AS base
+WORKDIR /app
+COPY package*.json ./
 
-WORKDIR /app 
+# ---------
+# Dev
+# ---------
+FROM base AS dev
+RUN npm install
+COPY . .
+RUN npx prisma generate
+CMD ["sh", "./entrypoint.sh"]
 
-COPY package*.json ./ 
-RUN npm install 
-
-COPY . . 
-
-RUN npx prisma generate 
-
+# ---------
+# Prod
+# ---------
+FROM base AS prod
+RUN npm ci   
+COPY . .
+RUN npx prisma generate       
+RUN npm run build             
 EXPOSE 3000
-
-CMD ["sh","./entrypoint.sh"]
+CMD ["npm", "run", "start"]
