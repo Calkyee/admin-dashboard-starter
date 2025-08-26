@@ -97,7 +97,6 @@ const AdminNavBar = ({
 
   const handleReset = () => {
     if (originalAdmins) {
-      console.log('[HANDLE RESET]: reseting admins'); 
       setAdmins([...originalAdmins]);
     }
   };
