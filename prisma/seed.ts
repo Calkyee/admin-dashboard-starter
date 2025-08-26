@@ -1,13 +1,12 @@
 // prisma/seed.ts
 import { PrismaClient } from "@prisma/client";
-import { hash } from "bcrypt";
-
+import passwordHash from '@/lib/hashing/passwordHash'; 
 const prisma = new PrismaClient();
 
 async function main() {
   const email = "root@admin.com";
   const password = "rootpassword";
-  const hashedPassword = await hash(password, 10);
+  const hashedPassword = await passwordHash(password);
 
   const existingUser = await prisma.user.findUnique({
     where: { email },
