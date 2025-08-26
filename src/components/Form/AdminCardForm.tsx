@@ -6,6 +6,10 @@ type userType = z.infer<typeof UserSchema>;
 
 
 const AdminForm = ({ admin }: { admin: userType }) => {
+  const [email, setEmail] = useState(''); 
+  const [name, setName] = useState(''); 
+  const [password, setPassword] = useState(''); 
+
   const [editingField, setEditingField] = useState<{
     adminId: string;
     field: 'name' | 'email' | 'password';
@@ -30,7 +34,9 @@ const AdminForm = ({ admin }: { admin: userType }) => {
               type="text"
               className={h2ClassNames}
               defaultValue={admin.email}
-              onBlur={() => setEditingField(null)}
+              onChange={(e)=> 
+                setEmail(e.target.value)
+              }
             />
           </div>
         ) : (
@@ -59,9 +65,9 @@ const AdminForm = ({ admin }: { admin: userType }) => {
               type="text"
               className={h2ClassNames}
               defaultValue={admin.name}
-              onBlur={() => {
-                setEditingField(null);
-              }}
+              onChange={(e)=>
+                setName(e.target.value)
+              }
             />
           </div>
         ) : (
@@ -90,7 +96,7 @@ const AdminForm = ({ admin }: { admin: userType }) => {
               type="text"
               className={h2ClassNames}
               defaultValue={admin.passwordHash ?? ''}
-              onBlur={() => setEditingField(null)}
+              onChange={(e)=>setPassword(e.target.value)}
             />
           </div>
         ) : (
