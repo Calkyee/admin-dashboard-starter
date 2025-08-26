@@ -20,7 +20,6 @@ if [ "$NODE_ENV" = "development" ]; then
   echo "📦 Starting development server..."
   npm run dev:docker
 else
-  echo "📦 Building and starting production server..."
-  npm run build
-  npm run start
+  echo "📦 Starting production server..."
+  npm run start   # build already done in Dockerfile
 fi
