@@ -104,7 +104,7 @@ const AdminNavBar = ({
   return (
     <div className="max-h-fit min-w-full flex flex-row gap-2 text-center">
       <div className={ButtonClassNames}>
-        <Link href="/create/admin">Create</Link>
+        <Link href="/create/admins">Create</Link>
       </div>
       <div className={ButtonClassNames} onClick={handleReset}>
         <p>Read</p>
