@@ -10,6 +10,7 @@ import AdminCardForm from "@/components/Form/AdminCardForm";
 
 const AdminCard = () => {
   const [admins, setAdmins] = useState<userType[] | null>(null);
+  const [originalAdmins, setOriginalAdmins] = useState<userType[] | null>(null); 
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [expandedAdminId, setExpandedAdminId] = useState<string | null>(null);
@@ -27,6 +28,7 @@ const AdminCard = () => {
       setIsLoading(false);
       setError('');
       setAdmins(admins);
+      setOriginalAdmins(admins); 
     };
 
     fetchAdmins();
@@ -34,7 +36,7 @@ const AdminCard = () => {
 
   return (
     <>
-      <AdminNavBar />
+      <AdminNavBar originalAdmins={originalAdmins} setAdmins={setAdmins}/>
       <div className="flex flex-1 gap-4 flex-col overflow-y-auto max-h-[400px]">
         <h2>Admins</h2>
         {isLoading && <p>Loading admins...</p>}
@@ -59,7 +61,13 @@ const AdminCard = () => {
                     <h2>▼</h2>
                   </div>
                   {expandedAdminId === admin.id && (
-                    <AdminCardForm admin={admin} />
+                    <AdminCardForm admin={admin}
+                     onChange={(updatedAdmin) => {
+                      setAdmins((prev) =>
+                        prev?.map((a) => (a.id === admin.id ? updatedAdmin : a)) ?? []
+                      );
+                    }}
+                    />
                   )}
                 </li>
               );
@@ -73,7 +81,13 @@ const AdminCard = () => {
 
 
 
-const AdminNavBar = () => {
+const AdminNavBar = ({
+  originalAdmins,
+  setAdmins,
+}: {
+  originalAdmins: userType[] | null;
+  setAdmins: React.Dispatch<React.SetStateAction<userType[] | null>>;
+}) => {
   const ButtonClassNames = `
     flex justify-center
     w-4/12 max-h-12 bg-[#2B73F9] 
@@ -81,12 +95,19 @@ const AdminNavBar = () => {
     hover:bg-[#1E4EA9] hover:cursor-pointer duration-100 ease-in-out
   `;
 
+  const handleReset = () => {
+    if (originalAdmins) {
+      console.log('[HANDLE RESET]: reseting admins'); 
+      setAdmins([...originalAdmins]);
+    }
+  };
+
   return (
     <div className="max-h-fit min-w-full flex flex-row gap-2 text-center">
       <div className={ButtonClassNames}>
         <Link href="/create/admin">Create</Link>
       </div>
-      <div className={ButtonClassNames}>
+      <div className={ButtonClassNames} onClick={handleReset}>
         <p>Read</p>
       </div>
       <div className={ButtonClassNames}>
