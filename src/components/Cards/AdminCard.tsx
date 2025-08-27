@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { UserSchema } from '@/zod';
-import { z } from 'zod';
+import { email, z } from 'zod';
 
 type userType = z.infer<typeof UserSchema>;
 import AdminCardForm from "@/components/Form/AdminCardForm"; 
+import passwordHash from '@/lib/hashing/passwordHash';
 
 const AdminCard = () => {
   const [admins, setAdmins] = useState<userType[] | null>(null);
@@ -36,7 +37,7 @@ const AdminCard = () => {
 
   return (
     <>
-      <AdminNavBar originalAdmins={originalAdmins} setAdmins={setAdmins}/>
+      <AdminNavBar setOriginalAdmins={setOriginalAdmins} expandedAdminId={expandedAdminId} originalAdmins={originalAdmins} setAdmins={setAdmins} admins={admins}/>
       <div className="flex flex-1 gap-4 flex-col overflow-y-auto max-h-[400px]">
         <h2>Admins</h2>
         {isLoading && <p>Loading admins...</p>}
@@ -84,9 +85,15 @@ const AdminCard = () => {
 const AdminNavBar = ({
   originalAdmins,
   setAdmins,
+  expandedAdminId,
+  setOriginalAdmins,
+  admins
 }: {
   originalAdmins: userType[] | null;
   setAdmins: React.Dispatch<React.SetStateAction<userType[] | null>>;
+  setOriginalAdmins: React.Dispatch<React.SetStateAction<userType[] | null>>
+  expandedAdminId: string | null;
+  admins: userType[] | null; 
 }) => {
   const ButtonClassNames = `
     flex justify-center
@@ -101,6 +108,59 @@ const AdminNavBar = ({
     }
   };
 
+  const handleUpdate = ()=>{ 
+    if(!expandedAdminId || !admins || !originalAdmins) return; 
+    const adminToUpdate = originalAdmins.find((a)=> a.id === expandedAdminId); 
+    const updatedAdmin = admins.find((a)=> a.id === expandedAdminId); 
+    if(!adminToUpdate) return; 
+
+    const validated = UserSchema.pick({ 
+      email: true, 
+      passwordHash: true, 
+      name: true
+    }).safeParse(updatedAdmin);
+    if(!validated.success) return;
+    const validatedUser = validated.data; 
+      
+
+    const updateReq = async()=>{ 
+      console.log('[DEBUG]: sending update request')
+      const res = await fetch("/api/secure/admins/updateAdmins", { 
+        method: "PUT", 
+        headers: { "Content-Type": "application/json"}, 
+        credentials: "include",
+        body: JSON.stringify({ 
+          id: adminToUpdate.id, 
+         ...(validatedUser.email && {email: validatedUser.email}),
+         ...(validatedUser.name && {name: validatedUser.name}), 
+         ...(validatedUser.passwordHash && {passwordHash: validatedUser.passwordHash}) 
+        })
+      }); 
+      if(res.ok){ 
+        // Replace old admin in adminToUpdate with the new data
+        console.log('[DEBUG]: Updating admins')
+        const data = await res.json(); 
+        const updated: userType = data.new_user_data;
+        const validated = UserSchema.safeParse(updated); 
+        if(!validated.success) return; 
+        setAdmins(prev => 
+          prev ? prev.map(a=> a.id === validated.data.id ? validated.data : a) : prev
+        ); 
+        setOriginalAdmins(prev => 
+          prev ? prev.map(a=> a.id === validated.data.id ? validated.data : a) : prev
+        ); 
+        console.log('[DEBUG]: Successfully updated admins')
+      }
+    }
+
+
+    updateReq().catch((err: any)=>{ 
+      console.error('[UPDATE ERROR]: ', err.message); 
+    }) 
+ 
+  }
+
+
   return (
     <div className="max-h-fit min-w-full flex flex-row gap-2 text-center">
       <div className={ButtonClassNames}>
@@ -109,7 +169,7 @@ const AdminNavBar = ({
       <div className={ButtonClassNames} onClick={handleReset}>
         <p>Read</p>
       </div>
-      <div className={ButtonClassNames}>
+      <div className={ButtonClassNames} onClick={handleUpdate}>
         <p>Update</p>
       </div>
       <div className={ButtonClassNames}>
