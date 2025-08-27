@@ -11,7 +11,7 @@ const UserInputSchema = UserSchema.pick({
   email: true, 
   passwordHash: true, 
   id: true 
-}); 
+}).partial({ name: true, email: true, passwordHash: true});
 
 export async function PUT(request: NextRequest){ 
   try{
@@ -34,9 +34,9 @@ export async function PUT(request: NextRequest){
       }, {status: 404}); 
     }
 
-    let hashedPassword; 
-    if(validatedData.data?.passwordHash){ 
-      hashedPassword = await passwordHash(validatedData.data?.passwordHash); 
+    let hashedPassword = null;
+    if (validatedData.data.passwordHash) {
+      hashedPassword = await passwordHash(validatedData.data.passwordHash);
     }
      
     const validatedUser = validatedData.data; 
