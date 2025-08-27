@@ -140,7 +140,10 @@ const AdminNavBar = ({
           id: adminToUpdate.id, 
          ...(validatedUser.email && {email: validatedUser.email}),
          ...(validatedUser.name && {name: validatedUser.name}), 
-         ...(validatedUser.passwordHash && {passwordHash: validatedUser.passwordHash}) 
+         ...(validatedUser.passwordHash === adminToUpdate.passwordHash 
+          ? {} 
+          : {passwordHash: validatedUser.passwordHash}
+         ) 
         })
       }); 
       if(res.ok){ 
