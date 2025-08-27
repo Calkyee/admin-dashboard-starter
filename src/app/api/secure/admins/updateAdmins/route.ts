@@ -34,7 +34,7 @@ export async function PUT(request: NextRequest){
       }, {status: 404}); 
     }
 
-    let hashedPassword = null;
+    let hashedPassword: string | undefined;
     if (validatedData.data.passwordHash) {
       hashedPassword = await passwordHash(validatedData.data.passwordHash);
     }
