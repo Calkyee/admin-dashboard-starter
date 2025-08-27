@@ -25,7 +25,7 @@ export async function DELETE(request: NextRequest){
     const currentUser = await prisma.user.findUnique({ 
       where: {id: validatedData.data.id}
     }); 
-    const rootAdminEamil = 'root@admin.com'; 
+    const rootAdminEamil = process.env.ROOT_EMAIL ?? 'root@admin.com'; 
     
     if(currentUser?.email === rootAdminEamil){ 
       return NextResponse.json({ 
