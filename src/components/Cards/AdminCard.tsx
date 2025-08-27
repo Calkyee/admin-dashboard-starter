@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { UserSchema } from '@/zod';
-import { email, z } from 'zod';
+import { z } from 'zod';
 
 import AdminCardForm from "@/components/Form/AdminCardForm"; 
 
@@ -158,8 +158,8 @@ const AdminNavBar = ({
     }
 
 
-    updateReq().catch((err: any)=>{ 
-      console.error('[UPDATE ERROR]: ', err.message); 
+    updateReq().catch((err)=>{ 
+      console.error('[UPDATE ERROR]: ', err); 
     }) 
  
   }
