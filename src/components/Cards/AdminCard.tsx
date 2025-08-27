@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { UserSchema } from '@/zod';
 import { email, z } from 'zod';
 
-type userType = z.infer<typeof UserSchema>;
 import AdminCardForm from "@/components/Form/AdminCardForm"; 
-import passwordHash from '@/lib/hashing/passwordHash';
-import { id } from 'zod/v4/locales';
+
+type userType = z.infer<typeof UserSchema>;
+
+const rootAdminEamil: string =  'root@admin.com'; 
+
 
 const AdminCard = () => {
   const [admins, setAdmins] = useState<userType[] | null>(null);
@@ -125,7 +127,6 @@ const AdminNavBar = ({
       
 
     const updateReq = async()=>{ 
-      console.log('[DEBUG]: sending update request')
       const res = await fetch("/api/secure/admins/updateAdmins", { 
         method: "PUT", 
         headers: { "Content-Type": "application/json"}, 
@@ -138,8 +139,6 @@ const AdminNavBar = ({
         })
       }); 
       if(res.ok){ 
-        // Replace old admin in adminToUpdate with the new data
-        console.log('[DEBUG]: Updating admins')
         const data = await res.json(); 
         const updated: userType = data.new_user_data;
         const validated = UserSchema.safeParse(updated); 
@@ -150,7 +149,6 @@ const AdminNavBar = ({
         setOriginalAdmins(prev => 
           prev ? prev.map(a=> a.id === validated.data.id ? validated.data : a) : prev
         ); 
-        console.log('[DEBUG]: Successfully updated admins')
       }
     }
 
@@ -163,38 +161,31 @@ const AdminNavBar = ({
 
   const handleDelete = ()=>{ 
     if(!expandedAdminId || !admins || !originalAdmins) return;  
-
-    const userDeleteSchema = UserSchema.pick({ 
-      id: true
-    }); 
-    const validated = userDeleteSchema.safeParse({id: expandedAdminId}); 
-    if(!validated.success) return; 
-
     const deleteReq = async()=>{ 
-      console.log('[DEBUG DELETE]: sending request to delete admin')
-      const res = await fetch('/api/secure/admins/deleteAdmin', { 
-        method: 'DELETE', 
-        credentials: 'include', 
+      const req = await fetch('/api/secure/admins/deleteAdmin', {
+        method: "DELETE",
+        credentials: "include", 
         headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify(validated.data)
-      }); 
-
-      if(!res.ok) return; 
-      const data = await res.json(); 
-      const deleted: userType = data.deletedUser; 
-      console.log('[DEBUG DELETE]: deleting user from frontend')
-      setAdmins((prev) =>
-        prev ? prev.filter((a) => a.id !== deleted.id) : prev
-      );
-      setOriginalAdmins((prev)=> 
-        prev ? prev.filter((a)=> a.id !== deleted.id) : prev
-      );   
-      console.log('[DEBUG DELETE]: successfully deleted user')
+        body: JSON.stringify({id: expandedAdminId})
+      });
+      const data = await req.json(); 
+    
+      if(!req.ok){ 
+        const currentUser: userType = data.currentUser; 
+        if(currentUser.email === rootAdminEamil){ 
+          return alert("You cannot delete the root admin"); 
+        }
+        return; 
+      }
+      
+      setAdmins(prev => 
+        prev ? prev.filter(a => a.id !== expandedAdminId ) : prev
+      )
+      setOriginalAdmins(prev => 
+        prev ? prev.filter(a => a.id !== expandedAdminId ) : prev
+      )
     }
-    deleteReq().catch((err)=> {
-      console.error('[DELETE ERROR]: ', err.message); 
-    })
-
+    deleteReq(); 
   }
 
   return (
@@ -208,7 +199,7 @@ const AdminNavBar = ({
       <div className={ButtonClassNames} onClick={handleUpdate}>
         <p>Update</p>
       </div>
-      <div className={ButtonClassNames}>
+      <div className={ButtonClassNames} onClick={handleDelete}>
         <p>Delete</p>
       </div>
     </div>
