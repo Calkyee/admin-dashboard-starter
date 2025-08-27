@@ -8,6 +8,7 @@ import { email, z } from 'zod';
 type userType = z.infer<typeof UserSchema>;
 import AdminCardForm from "@/components/Form/AdminCardForm"; 
 import passwordHash from '@/lib/hashing/passwordHash';
+import { id } from 'zod/v4/locales';
 
 const AdminCard = () => {
   const [admins, setAdmins] = useState<userType[] | null>(null);
@@ -160,6 +161,41 @@ const AdminNavBar = ({
  
   }
 
+  const handleDelete = ()=>{ 
+    if(!expandedAdminId || !admins || !originalAdmins) return;  
+
+    const userDeleteSchema = UserSchema.pick({ 
+      id: true
+    }); 
+    const validated = userDeleteSchema.safeParse({id: expandedAdminId}); 
+    if(!validated.success) return; 
+
+    const deleteReq = async()=>{ 
+      console.log('[DEBUG DELETE]: sending request to delete admin')
+      const res = await fetch('/api/secure/admins/deleteAdmin', { 
+        method: 'DELETE', 
+        credentials: 'include', 
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify(validated.data)
+      }); 
+
+      if(!res.ok) return; 
+      const data = await res.json(); 
+      const deleted: userType = data.deletedUser; 
+      console.log('[DEBUG DELETE]: deleting user from frontend')
+      setAdmins((prev) =>
+        prev ? prev.filter((a) => a.id !== deleted.id) : prev
+      );
+      setOriginalAdmins((prev)=> 
+        prev ? prev.filter((a)=> a.id !== deleted.id) : prev
+      );   
+      console.log('[DEBUG DELETE]: successfully deleted user')
+    }
+    deleteReq().catch((err)=> {
+      console.error('[DELETE ERROR]: ', err.message); 
+    })
+
+  }
 
   return (
     <div className="max-h-fit min-w-full flex flex-row gap-2 text-center">
