@@ -106,9 +106,14 @@ const AdminNavBar = ({
   `;
 
   const handleReset = () => {
-    if (originalAdmins) {
-      setAdmins([...originalAdmins]);
-    }
+    if(!originalAdmins || !expandedAdminId) return; 
+    const selectedAdmin = originalAdmins.find((a)=>a.id === expandedAdminId); 
+    if(!selectedAdmin) return; 
+    setAdmins((prev)=> 
+      prev
+        ? prev.map((a)=> a.id === expandedAdminId ? selectedAdmin : a)
+        : prev
+    ); 
   };
 
   const handleUpdate = ()=>{ 
