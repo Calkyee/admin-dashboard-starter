@@ -25,6 +25,13 @@ export async function DELETE(request: NextRequest){
     const currentUser = await prisma.user.findUnique({ 
       where: {id: validatedData.data.id}
     }); 
+    const rootAdminEamil = 'root@admin.com'; 
+    
+    if(currentUser?.email === rootAdminEamil){ 
+      return NextResponse.json({ 
+        error: "Unable to delete root admin"
+      }, {status: 400}); 
+    }
 
     if(!currentUser){ 
       return NextResponse.json({ 
