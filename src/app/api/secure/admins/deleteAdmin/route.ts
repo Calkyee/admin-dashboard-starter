@@ -5,6 +5,8 @@ import { prisma } from "@/lib/store/prisma";
 import { UserSchema } from "@/zod";
 import { ZodError, z } from "zod";
 
+// process.env.ROOT_EMAIL ||
+const rootAdminEamil: string =  'root@admin.com'; 
 const UserInputSchema = UserSchema.pick({ 
   id: true
 }); 
@@ -25,27 +27,26 @@ export async function DELETE(request: NextRequest){
     const currentUser = await prisma.user.findUnique({ 
       where: {id: validatedData.data.id}
     }); 
-    const rootAdminEamil = process.env.ROOT_EMAIL ?? 'root@admin.com'; 
-    
-    if(currentUser?.email === rootAdminEamil){ 
-      return NextResponse.json({ 
-        error: "Unable to delete root admin"
-      }, {status: 400}); 
-    }
 
     if(!currentUser){ 
       return NextResponse.json({ 
         error: "Unable to find User"
       }, {status: 404}); 
     }
+ 
+    if(currentUser.email === rootAdminEamil){ 
+      return NextResponse.json({ 
+        error: "Unable to delete root admin", 
+        currentUser
+      }, {status: 400}); 
+    }
 
-    const deletedUser = await prisma.user.delete({ 
-      where: {id: currentUser.id} // Only use trusted information, never use inputted data even if validated
-    }); 
+    await prisma.admin.deleteMany({ where: { userId: currentUser.id } });
+    const deletedUser = await prisma.user.delete({ where: { id: currentUser.id } });
 
     return NextResponse.json({ 
       message: "Successfully deleted User", 
-      deletedUser: deletedUser
+      currentUser 
     }, {status: 200}); 
   }catch(error){ 
     if(error instanceof ZodError){ 
