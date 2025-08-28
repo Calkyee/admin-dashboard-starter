@@ -26,21 +26,7 @@ const CurrentAdminsLoggedInCard = () => {
   useEffect(()=>{ 
     let interval: NodeJS.Timeout; 
     setIsloading(true); 
-    const getSessions = async()=>{ 
-      try{
-        const res = await fetch('/api/secure/sessions/getSessions', {credentials: 'include'}); 
-        if(!res.ok){ 
-          setError("Unable to retrieve logged in admins"); 
-          return; 
-        }
-        const data = await res.json(); 
-        const sessions: SessionType[] = data.currentSessions; 
-        setCurrentSessions(sessions.length); 
-        setIsloading(false);
-      }catch(error){ 
-        setError("Unexpected error fetching sessions"); 
-      }
-    }
+    
     const getAdmins = async()=>{ 
       try{
         const res = await fetch('/api/secure/admins/getAdmins', {credentials: 'include'}); 
@@ -54,6 +40,23 @@ const CurrentAdminsLoggedInCard = () => {
         setError('Unexpected error fetching admins'); 
       }
     }
+    const getSessions = async()=>{ 
+      try{
+        const res = await fetch('/api/secure/sessions/getSessions', {credentials: 'include'}); 
+        if(!res.ok){ 
+          setError("Unable to retrieve logged in admins"); 
+          return; 
+        }
+        const data = await res.json(); 
+        const sessions: SessionType[] = data.currentSessions; 
+        await getAdmins() // Get the admins every 5 minutes as-well
+        setCurrentSessions(sessions.length); 
+        setIsloading(false);
+      }catch(error){ 
+        setError("Unexpected error fetching sessions"); 
+      }
+    }
+
     // Initial fetch 
     getSessions(); 
     getAdmins(); 
