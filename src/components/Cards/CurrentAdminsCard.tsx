@@ -1,11 +1,22 @@
 'use client'; 
 import React, { useEffect, useState } from 'react'
+import {
+  LineChart, 
+  Line, 
+  ResponsiveContainer
+} from 'recharts'; 
+
 import { UserSchema } from '@/zod';
 import {z} from 'zod'; 
 
 type UserType = z.infer<typeof UserSchema>  
+type DataPoint = { 
+  data: string; 
+  users: number; 
+}
 
 const CurrentAdminsCard = () => {
+  const [data, setData] = useState<DataPoint[]>([]); 
   const [numberOfUsers, setNumberOfUsers] = useState<number | null>(null); 
   const [isloading, setIsLoading] = useState<boolean | undefined>(true); 
   useEffect(()=>{ 
@@ -15,6 +26,11 @@ const CurrentAdminsCard = () => {
       const data = await res.json();
       const users: UserType[] | null = data.admins; 
       if(!users) return; 
+      const growthData: DataPoint[] = users.map((_, idx) => ({
+        data: String(idx + 1), 
+        users: idx + 1
+      }));
+      setData(growthData); 
       setIsLoading(false); 
       setNumberOfUsers(users.length); 
     }
@@ -27,7 +43,21 @@ const CurrentAdminsCard = () => {
       <h2>Current Admins</h2>
       {isloading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isloading && ( 
-        <h2>{numberOfUsers}</h2>
+        <>
+          <h2>{numberOfUsers}</h2>
+        <ResponsiveContainer width="100%" height={200}>
+          <LineChart data={data}>
+            <Line
+              type="stepAfter"
+              dataKey="users"
+              stroke="#2563eb"
+              strokeWidth={2}
+              dot={false}
+              isAnimationActive={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+        </>
       )}
     
     </>
