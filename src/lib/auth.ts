@@ -73,21 +73,18 @@ export const authOptions: NextAuthOptions = {
 
   events: {
     async session ({session, token}){ 
+      await prisma.session.deleteMany({ 
+        where: { userId: token.id as string}
+      })
       const sessionToken = crypto.randomUUID(); 
-      const existing = await prisma.session.findFirst({
-        where: {
-          userId: token.id as string
-        },
-      });
-      if(!existing){ 
-        await prisma.session.create({ 
-          data: { 
-            sessionToken, 
-            userId: token.id as string, 
-            expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
-          }
-        })
-      }
+      await prisma.session.create({ 
+        data: { 
+          sessionToken, 
+          userId: token.id as string, 
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
+        }
+      })
+      
     }, 
     async signOut({ token }){ 
       await prisma.session.deleteMany({ 
