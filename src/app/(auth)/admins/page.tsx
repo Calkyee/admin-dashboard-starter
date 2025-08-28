@@ -7,10 +7,18 @@ import CurrentAdminsLoggedInCard from '@/components/Cards/CurrentAdminsLoggedInC
 const Page = () => {
   return (
     <>
-    <div className="bg-white shadow-lg p-4 rounded col-span-1 row-span-2 ">
+    <div className="
+      col-span-1 row-span-2 
+      p-4 rounded 
+      bg-white shadow-lg  
+    ">
       <CurrentAdminsCard />
     </div>
-    <div className="bg-white shadow-lg p-4 rounded col-span-1 row-span-2">
+    <div className="
+    bg-white shadow-lg 
+    p-4 rounded 
+    col-span-1 row-span-2
+    ">
      <CurrentAdminsLoggedInCard />
     </div>
     <div className="bg-white shadow-lg p-4 rounded col-span-1 row-span-2">Card 3</div>
