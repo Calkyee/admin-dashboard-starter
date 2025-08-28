@@ -76,27 +76,31 @@ const CurrentAdminsLoggedInCard = () => {
       {error && (<h2 className='text-red-500'>{error}</h2>)}
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isLoading && currentSessions !== 0 && ( 
-        <div className='h-full w-full flex flex-col items-center justify-center align-middle'>
+        <>
+        <h2>{currentSessions}</h2>
+        <div className='flex justify-center'>
           {/* Chart for rendering data here */}
-          <h2 className='self-start'>{currentSessions}</h2>
           <ResponsiveContainer width={150} height={150}>
             <PieChart>
               <Pie
-                data={chartData}
-                dataKey="value"
-                nameKey="name"
-                outerRadius={65}
-                innerRadius={35}
-                label
+              data={chartData}
+              dataKey="value"
+              nameKey="name"
+              outerRadius={65}
+              innerRadius={35}
+              label
               >
               { chartData.map((entry, idx)=>( 
-                <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]}/>
-              )) }  
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+              <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]}/>
+            )) }  
+            </Pie>
+          <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
         </div>
+
+        
+        </>
       )
       }
     </>
