@@ -1,5 +1,6 @@
 // src/lib/auth.ts
 import type { NextAuthOptions } from "next-auth";
+import { PrismaAdapter } from '@next-auth/prisma-adapter'; 
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/store/prisma";
 import { compare } from "bcrypt";
@@ -9,6 +10,7 @@ import { z } from "zod";
 type UserType = z.infer<typeof UserSchema>;
 
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma), 
   session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
