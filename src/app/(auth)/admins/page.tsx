@@ -10,6 +10,8 @@ const Page = () => {
       <CurrentAdminsCard />
     </div>
     <div className="bg-white shadow-lg p-4 rounded col-span-1 row-span-2">
+      <h2>Current Users Logged in</h2>
+      
     </div>
     <div className="bg-white shadow-lg p-4 rounded col-span-1 row-span-2">Card 3</div>
     <div className="
