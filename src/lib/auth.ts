@@ -80,7 +80,8 @@ export const authOptions: NextAuthOptions = {
       await prisma.session.create({ 
         data: { 
           sessionToken, 
-          userId: token.id as string, 
+          userId: token.id as string,
+          lastLoggedIn: new Date().toISOString().split('T')[0], 
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
         }
       })
