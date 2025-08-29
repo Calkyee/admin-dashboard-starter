@@ -1,23 +1,19 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { prisma } from "@/lib/store/prisma"; 
+import { prisma } from "@/lib/store/prisma";
 
-export async function GET(
-  request: NextRequest, 
-  {params}: {params: {id: string}}
-){ 
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const id = url.pathname.split("/").pop(); // grab [id]
 
-  const userId = params.id; 
+  if (!id) {
+    return NextResponse.json({ error: "Missing id" }, { status: 400 });
+  }
 
-  const currentSession = await prisma.session.findFirst({ 
-    where: { userId }
-  }); 
-  if(!currentSession) return NextResponse.json({ 
-    error: "Unable to find Session"
-  }, {status: 404}); // This should realistically never be called but just incase 
+  const currentSession = await prisma.session.findFirst({ where: { userId: id } });
 
-  return NextResponse.json({ 
-    message: "Successfully found session", 
-    currentSession
-  }, {status: 200}); 
+  if (!currentSession) {
+    return NextResponse.json({ error: "Unable to find Session" }, { status: 404 });
+  }
+
+  return NextResponse.json({ message: "Successfully found session", currentSession });
 }
