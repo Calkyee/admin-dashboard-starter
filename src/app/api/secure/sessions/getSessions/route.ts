@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import { prisma } from '@/lib/store/prisma'; 
+import { ZodError } from "zod";
 
-export async function GET(request: NextRequest){ 
+export async function GET(){ 
   try{
     const currentSessions = await prisma.session.findMany({}); 
     if(currentSessions.length === 0){ 
@@ -17,8 +18,14 @@ export async function GET(request: NextRequest){
       currentSessions
     }, {status: 200}); 
   }catch(error){ 
+    if(error instanceof ZodError){ 
+      return NextResponse.json({ 
+        error: "Validation error", 
+        issues: error.issues
+      })
+    }
     return NextResponse.json({ 
       error: "Unexpected error"
-    }, {status: 500}); 
+    }, {status: 500});
   }
 }
