@@ -41,27 +41,29 @@ const CurrentAdminsCard = () => {
 
   return (
     <>
-      <h2>Current Admins</h2>
+      <h2>Current Admins {numberOfUsers}</h2>
       {isloading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isloading && ( 
         <>
-          <h2>{numberOfUsers}</h2>
-        <ResponsiveContainer width="100%" height={250}>
-          <LineChart data={data}>
-            <Line
-              type="stepAfter"
-              dataKey="users"
-              stroke="#2563eb"
-              strokeWidth={2}
-              dot={false}
-              isAnimationActive={false}
-            />
-            <Tooltip 
-              formatter={(value) => [`${value} admins`, ""]}
-              labelFormatter={(label) => `Index ${label}`}            
-            />
-          </LineChart>
-        </ResponsiveContainer>
+          <div className="h-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data}>
+                <Line
+                  type="stepAfter"
+                  dataKey="users"
+                  stroke="#2563eb"
+                  strokeWidth={2}
+                  dot={false}
+                  isAnimationActive={false}
+                />
+                <Tooltip
+                  formatter={(value) => [`${value} admins`, ""]}
+                  labelFormatter={(label) => `Index ${label}`}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
         </>
       )}
     
