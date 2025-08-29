@@ -3,6 +3,13 @@ import React, {useState, useEffect} from 'react'
 import { z } from 'zod'; 
 import { SessionSchema } from '@/zod';
 
+import { 
+  LineChart, 
+  Line, 
+  ResponsiveContainer,
+  Tooltip
+} from 'recharts'
+
 type SessionType = z.infer<typeof SessionSchema>; 
 
 type dataPoint = { 
@@ -65,10 +72,25 @@ const WeeklyUsersCard = () => {
       <h2>Weekly Admin Logins for {last7DaysDate}</h2>
       {error && (<h2 className='text-red-500'>{error}</h2>)}
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
-      {!isLoading && !error && (
-        <div>
-
-        </div>
+      {!isLoading && !error && chartData ? (
+        <ResponsiveContainer width="100%" height={150}>
+          <LineChart data={chartData}>
+            <Line 
+              type="stepAfter"
+              dataKey="number" 
+              stroke="#2563eb"
+              strokeWidth={2}
+              dot={false}
+              isAnimationActive={false}
+            />
+            <Tooltip
+              labelFormatter={(label) => `Date: ${label}`} 
+              formatter={(value) => [`Logins: ${value}`, '']}     
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      ) : !isLoading && ( 
+        <h2 className='text-red-500'>No active sessions</h2>
       )}
     
     </>
