@@ -14,6 +14,7 @@ const WeeklyUsersCard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);  
   const [chartData, setChartData] = useState<dataPoint[] | null>(null); 
+  const [last7DaysDate, setLast7DaysDate] = useState<string | null>(null);  
   useEffect(()=>{
     let interval: NodeJS.Timeout; 
     setIsLoading(true); 
@@ -33,13 +34,21 @@ const WeeklyUsersCard = () => {
       }; 
       console.log('[CURRENT SESSIONS]: ', sessions); 
       const now = new Date(); 
+      setLast7DaysDate(now.toISOString().split('T')[0]); 
       const last7Days = Array.from({length: 7}).map((_, i)=>{ 
         const d = new Date(); 
         d.setDate(now.getDate() - (6 - i));
         return d.toISOString().split('T')[0];  
       })
-      console.log('[LAST 7 DAYS]: ', last7Days)
+      console.log('[LAST 7 DAYS]: ', last7Days); 
 
+      const loginForEachDate = last7Days.map(day => { 
+        const number = sessions.filter(s => s.lastLoginDate === day).length; 
+        return {loginDate: day, number}
+      }); 
+      console.log('[LOGIN FOR EACH DATE]: ', loginForEachDate); 
+      setChartData(loginForEachDate); 
+      setIsLoading(false); 
     }
     // Initial fetch 
     getSessions(); 
@@ -52,10 +61,17 @@ const WeeklyUsersCard = () => {
   }, [])
 
   return (
-    <div>
+    <>
+      <h2>Weekly Admin Logins for {last7DaysDate}</h2>
+      {error && (<h2 className='text-red-500'>{error}</h2>)}
+      {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
+      {!isLoading && !error && (
+        <div>
 
-
-    </div>
+        </div>
+      )}
+    
+    </>
   )
 }
 
