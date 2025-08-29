@@ -72,7 +72,7 @@ export const authOptions: NextAuthOptions = {
   },
 
   events: {
-    async session ({session, token}){ 
+    async session ({token}){ 
       await prisma.session.deleteMany({ 
         where: { userId: token.id as string}
       })
