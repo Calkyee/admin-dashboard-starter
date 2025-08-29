@@ -23,7 +23,6 @@ const WeeklyUsersCard = () => {
   const [chartData, setChartData] = useState<dataPoint[] | null>(null); 
   const [last7DaysDate, setLast7DaysDate] = useState<string | null>(null);  
   useEffect(()=>{
-    let interval: NodeJS.Timeout; 
     setIsLoading(true); 
     const getSessions = async()=>{ 
       const  res = await fetch('/api/secure/sessions/getSessions', {credentials: 'include'}); 
@@ -61,10 +60,7 @@ const WeeklyUsersCard = () => {
     // Initial fetch 
     getSessions(); 
 
-    // Runs every 5 minutes 
-    interval = setInterval(() => {
-      getSessions(); 
-    }, 1000 * 60 * 5);
+    const interval: NodeJS.Timeout = setInterval(getSessions, 1000 * 60 * 5);
     return clearInterval(interval); 
   }, [])
 
