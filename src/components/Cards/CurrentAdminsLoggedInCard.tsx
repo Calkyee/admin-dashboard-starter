@@ -23,8 +23,7 @@ const CurrentAdminsLoggedInCard = () => {
   const [currentAdmins, setCurrentAdmins] = useState<UserType[] | null>(null); 
   
   const [error, setError] = useState<string>(""); 
-  useEffect(()=>{ 
-    let interval: NodeJS.Timeout; 
+  useEffect(()=>{  
     setIsloading(true); 
     
     const getAdmins = async()=>{ 
@@ -37,7 +36,9 @@ const CurrentAdminsLoggedInCard = () => {
         }
         setCurrentAdmins(admins); 
       }catch(error){ 
-        setError('Unexpected error fetching admins'); 
+        if(error){ 
+          setError('Unexpected error fetching admins'); 
+        }
       }
     }
     const getSessions = async()=>{ 
@@ -53,14 +54,16 @@ const CurrentAdminsLoggedInCard = () => {
         setCurrentSessions(sessions.length); 
         setIsloading(false);
       }catch(error){ 
-        setError("Unexpected error fetching sessions"); 
+        if(error){ 
+          setError("Unexpected error fetching sessions"); 
+        }
       }
     }
 
     // Initial fetch 
     getSessions(); 
     getAdmins(); 
-    interval = setInterval(getSessions, 1000 * 60 * 5); 
+    const interval: NodeJS.Timeout = setInterval(getSessions, 1000 * 60 * 5); 
     return ()=> clearInterval(interval); 
   }, []); // Run when loaded
 
