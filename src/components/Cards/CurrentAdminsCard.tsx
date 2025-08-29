@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import {
   LineChart, 
   Line, 
-  ResponsiveContainer
+  ResponsiveContainer, 
+  Tooltip
 } from 'recharts'; 
 
 import { UserSchema } from '@/zod';
@@ -54,6 +55,10 @@ const CurrentAdminsCard = () => {
               strokeWidth={2}
               dot={false}
               isAnimationActive={false}
+            />
+            <Tooltip 
+              formatter={(value) => [`${value} admins`, ""]}
+              labelFormatter={(label) => `Index ${label}`}            
             />
           </LineChart>
         </ResponsiveContainer>
