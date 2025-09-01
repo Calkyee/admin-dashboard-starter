@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   web-dev: 
     container_name: app_dashboard_web_dev
