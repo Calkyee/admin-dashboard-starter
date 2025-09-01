@@ -4,12 +4,7 @@ import { prisma } from "@/lib/store/prisma";
 
 export async function GET(request: NextRequest){ 
   try{
-    const failedLogins = await prisma.failedLogin.findMany({});
-    if(failedLogins.length === 0){ 
-      return NextResponse.json({ 
-        error: "No failedLogins found", 
-      }, {status: 404}); 
-    } 
+    const failedLogins = await prisma.failedLogin.findMany();
     return NextResponse.json({ 
       message: "Successfully found failed logins", 
       failedLogins
