@@ -82,7 +82,7 @@ const WeeklyUsersCard = () => {
               isAnimationActive={false}
             />
             <Tooltip
-              labelFormatter={(label) => label === 0 ? `Date: today` : `Date: ${label}`} 
+              labelFormatter={(label) => label === 0 ? `Date: Today` : `Date: ${label}`} 
               formatter={(value) => [`Logins: ${value}`, '']}     
             />
           </LineChart>
