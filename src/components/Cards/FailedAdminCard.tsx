@@ -25,7 +25,8 @@ const FailedAdminCard = () => {
 
     const interval: NodeJS.Timeout = setInterval(() => {
       getFailedAttempts()
-    }, 1000 * 60 * 5); // Run every 5 minutes   
+    }, 1000 * 60 * 5); // Run every 5 minutes
+    return ()=> clearInterval(interval);    
   }, [])
 
   return (
