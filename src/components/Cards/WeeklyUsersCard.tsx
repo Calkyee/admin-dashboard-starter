@@ -71,7 +71,8 @@ const WeeklyUsersCard = () => {
       {error && (<h2 className='text-red-500'>{error}</h2>)}
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isLoading && !error && chartData ? (
-        <ResponsiveContainer width="100%" height={150}>
+      <div className='w-full h-full py-4'>
+        <ResponsiveContainer width="100%" height="100%">
           <LineChart data={reversedData}>
             <Line 
               type="stepAfter"
@@ -87,6 +88,7 @@ const WeeklyUsersCard = () => {
             />
           </LineChart>
         </ResponsiveContainer>
+      </div>
       ) : !isLoading && ( 
         <h2 className='text-red-500'>No active sessions</h2>
       )}
