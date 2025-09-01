@@ -41,7 +41,7 @@ const CurrentAdminsCard = () => {
 
   return (
     <>
-      <h2>Current Admins {numberOfUsers}</h2>
+      <h2>Current Admins <span className='font-bold'> {numberOfUsers}</span></h2>
       {isloading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isloading && ( 
         <>
