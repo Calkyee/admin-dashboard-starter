@@ -61,7 +61,7 @@ const WeeklyUsersCard = () => {
     getSessions(); 
 
     const interval: NodeJS.Timeout = setInterval(getSessions, 1000 * 60 * 5);
-    return clearInterval(interval); 
+    return ()=> clearInterval(interval); 
   }, [])
   if(!chartData) return; 
   const reversedData = [...chartData].reverse(); 
