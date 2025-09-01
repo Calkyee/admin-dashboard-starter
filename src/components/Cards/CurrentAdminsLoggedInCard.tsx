@@ -83,9 +83,8 @@ const CurrentAdminsLoggedInCard = () => {
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isLoading && currentSessions !== 0 && ( 
         <>
-        <div className='flex justify-center'>
           {/* Chart for rendering data here */}
-          <ResponsiveContainer width={150} height={150}>
+          <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
               data={chartData}
@@ -101,10 +100,7 @@ const CurrentAdminsLoggedInCard = () => {
             </Pie>
           <Tooltip />
           </PieChart>
-        </ResponsiveContainer>
-        </div>
-
-        
+        </ResponsiveContainer>        
         </>
       )
       }
