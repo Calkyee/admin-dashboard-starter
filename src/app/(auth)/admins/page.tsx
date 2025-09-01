@@ -6,37 +6,42 @@ import CurrentAdminsLoggedInCard from '@/components/Cards/CurrentAdminsLoggedInC
 import WeeklyUsersCard from '@/components/Cards/WeeklyUsersCard';
 
 const Page = () => {
+  const topCardsCss = ` 
+  col-span-1 row-span-2 
+  p-4 rounded 
+  shadow-lg 
+  bg-white
+  `
+  const leftCardsCss = `
+  col-span-2 row-span-2
+  bg-white shadow-lg 
+  p-4 rounded 
+  `
+  const menuCardCss = `
+  col-span-2 row-span-4
+  bg-white shadow-lg 
+  p-4 rounded  
+  flex flex-col gap-5
+  `
+
   return (
     <>
-    <div className="
-      col-span-1 row-span-2 
-      p-4 rounded 
-      bg-white shadow-lg  
-    ">
+    <div className={topCardsCss}>
       <CurrentAdminsCard />
     </div>
-    <div className="
-    bg-white shadow-lg 
-    p-4 rounded 
-    col-span-1 row-span-2
-    ">
+    <div className={topCardsCss}>
      <CurrentAdminsLoggedInCard />
     </div>
-    <div className="bg-white shadow-lg p-4 rounded col-span-1 row-span-2">
+    <div className={topCardsCss}>
       <WeeklyUsersCard />
     </div>
-    <div className="
-    col-span-1 row-span-2
-  bg-white 
-    shadow-lg p-4 rounded 
-    flex flex-col 
-    ">
+    <div className={topCardsCss}>
     </div>
-    <div className="bg-white shadow-lg p-4 rounded col-span-2 row-span-2">Card 5</div>
-    <div className="bg-white shadow-lg p-4 rounded col-span-2 row-span-4 flex flex-col gap-5">
+    <div className={leftCardsCss}>Card 5</div>
+    <div className={menuCardCss}>
       <AdminCard />
     </div>
-    <div className="bg-white shadow-lg p-4 rounded col-span-2 row-span-2">Card 6</div>
+    <div className={leftCardsCss}>Card 6</div>
   </>
   )
 }
