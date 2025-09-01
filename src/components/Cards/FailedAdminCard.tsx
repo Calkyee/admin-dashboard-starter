@@ -1,6 +1,6 @@
 'use client'; 
 import React, { useEffect, useState } from 'react'
-import { FailedLogin, FailedLoginSchema, Session } from '@/zod';
+import { FailedLogin, Session } from '@/zod';
 
 import {
   ResponsiveContainer, 
