@@ -4,6 +4,7 @@ import AdminCard from '@/components/Cards/AdminCard';
 import CurrentAdminsCard from '@/components/Cards/CurrentAdminsCard';
 import CurrentAdminsLoggedInCard from '@/components/Cards/CurrentAdminsLoggedInCard';
 import WeeklyUsersCard from '@/components/Cards/WeeklyUsersCard';
+import FailedAdminCard from '@/components/Cards/FailedAdminCard'; 
 
 const Page = () => {
   const topCardsCss = ` 
@@ -36,6 +37,7 @@ const Page = () => {
       <WeeklyUsersCard />
     </div>
     <div className={topCardsCss}>
+      <FailedAdminCard />
     </div>
     <div className={leftCardsCss}>Card 5</div>
     <div className={menuCardCss}>
