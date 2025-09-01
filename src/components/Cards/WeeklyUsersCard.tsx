@@ -63,15 +63,16 @@ const WeeklyUsersCard = () => {
     const interval: NodeJS.Timeout = setInterval(getSessions, 1000 * 60 * 5);
     return clearInterval(interval); 
   }, [])
-
+  if(!chartData) return; 
+  const reversedData = [...chartData].reverse(); 
   return (
     <>
-      <h2>Weekly Admin Logins for {last7DaysDate}</h2>
+      <h2>Weekly Admin Logins for the past 7 days</h2>
       {error && (<h2 className='text-red-500'>{error}</h2>)}
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isLoading && !error && chartData ? (
         <ResponsiveContainer width="100%" height={150}>
-          <LineChart data={chartData}>
+          <LineChart data={reversedData}>
             <Line 
               type="stepAfter"
               dataKey="number" 
@@ -81,7 +82,7 @@ const WeeklyUsersCard = () => {
               isAnimationActive={false}
             />
             <Tooltip
-              labelFormatter={(label) => `Date: ${label}`} 
+              labelFormatter={(label) => label === 0 ? `Date: today` : `Date: ${label}`} 
               formatter={(value) => [`Logins: ${value}`, '']}     
             />
           </LineChart>
