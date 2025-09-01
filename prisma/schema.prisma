@@ -73,6 +73,14 @@ model Session {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+model FailedLogin {
+  id            String   @id @map("_id") @default(auto()) @db.ObjectId
+  userId        String   @db.ObjectId
+  loginAttempts Int      @default(1)
+  failedLogin   Boolean? @default(true)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 
 model VerificationToken {
   id         String   @id @map("_id") @default(auto()) @db.ObjectId
