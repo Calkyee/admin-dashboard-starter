@@ -78,12 +78,11 @@ const CurrentAdminsLoggedInCard = () => {
 
   return (
     <>
-      <h2>Current Admins logged in</h2>  
+      <h2>Current Admins logged in <span className='font-bold'> {currentSessions}</span></h2>  
       {error && (<h2 className='text-red-500'>{error}</h2>)}
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isLoading && currentSessions !== 0 && ( 
         <>
-        <h2>{currentSessions}</h2>
         <div className='flex justify-center'>
           {/* Chart for rendering data here */}
           <ResponsiveContainer width={150} height={150}>
