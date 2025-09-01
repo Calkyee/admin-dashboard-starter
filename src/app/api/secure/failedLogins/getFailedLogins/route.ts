@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { prisma } from "@/lib/store/prisma"; 
 
-export async function GET(request: NextRequest){ 
+export async function GET(){ 
   try{
     const failedLogins = await prisma.failedLogin.findMany();
     return NextResponse.json({ 
