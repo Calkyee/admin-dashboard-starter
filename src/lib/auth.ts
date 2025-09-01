@@ -31,7 +31,21 @@ export const authOptions: NextAuthOptions = {
         if (!user?.passwordHash) return null;
 
         const ok = await compare(credentials.password, user.passwordHash);
-        if (!ok) return null;
+        if (!ok){
+          const previousFailedLogins =  await prisma.failedLogin.findFirst({ 
+            where: {userId: user.id}, 
+          })
+          await prisma.failedLogin.upsert({
+            where: { id: previousFailedLogins?.id}, 
+            update: { loginAttempts: {increment: 1}}, 
+            create: { 
+              userId: user.id, 
+              failedLogin: true, 
+              loginAttempts: 1 
+            }
+          })
+          return null; 
+        }
 
         // ✅ validate with Zod schema
         const parsed = UserSchema.safeParse(user);
