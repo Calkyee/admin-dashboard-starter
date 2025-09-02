@@ -72,7 +72,7 @@ const WeeklyUsersCard = () => {
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isLoading && !error && chartData ? (
       <div className='w-full h-full py-4'>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer aspect={2.125}>
           <LineChart data={reversedData}>
             <Line 
               type="stepAfter"
