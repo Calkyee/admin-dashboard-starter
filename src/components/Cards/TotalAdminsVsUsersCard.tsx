@@ -15,6 +15,8 @@ const TotalAdminsVsUsersCard = () => {
   const [error, setError] = useState<string | null>(null); 
   const [onMouseEnter, setOnMouseEnter] = useState<OnMouseEnterProps | null>(null);
   const [previous7DaysLogin, setPrevious7DaysLogin] = useState<number | null>(null);  
+  const [previous14DaysLogin, setPrevious14DaysLogin] = useState<number | null>(null); 
+  const [increasedUsersOver7Days, setIncreasedUsersOver7Days] = useState<number | null>(null); 
   useEffect(()=>{
     setLoading(true); 
     const getPrevious7DaysLogins = async()=>{ 
@@ -22,9 +24,7 @@ const TotalAdminsVsUsersCard = () => {
       let data; 
       try{
         data = await res.json();
-        console.info('[GET PREVIOUS 7 DAYS]: Called Successfully'); 
         const sessions: Session[] = data.currentSessions; 
-        console.info('[SESSIONS]: ', sessions); 
         
         for(const s of sessions){ 
           const validated = SessionSchema.safeParse(s); 
@@ -36,15 +36,22 @@ const TotalAdminsVsUsersCard = () => {
         // Beyound this point all data is validated
         const now = new Date(); 
         const previous7Days = new Date(); 
+        const previous14Days = new Date(); 
         previous7Days.setDate(now.getDate() - 7); 
-      
+        previous14Days.setDate(now.getDate() - 14); 
+
         const previous7DaysSessions = sessions.filter(prev => { 
           const date = new Date(prev.lastLoginDate); 
           return date >= previous7Days && date <= now; 
-        }); 
-        console.info('[PREVIOUS 7 DAYS SESSIONS]: ', previous7DaysSessions); 
-        setPrevious7DaysLogin(previous7DaysSessions.length ?? 0); 
+        });
+        const previous14DaysSessions = sessions.filter(prev => { 
+          const date = new Date(prev.lastLoginDate); 
+          return date >= previous14Days && date <= previous7Days; 
+        });
 
+        setPrevious7DaysLogin(previous7DaysSessions.length ?? 0); 
+        setPrevious14DaysLogin(previous7DaysSessions.length - previous14DaysSessions.length); 
+        
       }catch(err){ 
         if(err && !res.ok){ 
           data = await res.text(); 
@@ -60,7 +67,6 @@ const TotalAdminsVsUsersCard = () => {
       let data; 
       try{
         data = await res.json(); 
-        console.log('[GET ADMINS RESPONSE]: ', data); 
         const resAdmins: Admin[] = data.admins; 
         setAdmins(resAdmins.length); 
         setUsers(5) // Dummy data cause the Users route does not exist yet
@@ -114,7 +120,7 @@ const TotalAdminsVsUsersCard = () => {
           }
         </div> 
         <div>
-          <h2 className='font-bold'>Previous 7 days logins: {previous7DaysLogin}</h2>
+          <h2 className='font-bold'>An increase of <span className='text-green-600'>{previous14DaysLogin ?? 0}</span> admins compared to the previous 7 days</h2>
         </div>
         </>
       )}
