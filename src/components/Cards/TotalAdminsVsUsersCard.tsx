@@ -43,14 +43,14 @@ const TotalAdminsVsUsersCard = () => {
   }, []); 
 
   return (
-    <div className='w-full h-full flex flex-col g-4'>
-      <h2>Admins Vs Users</h2>
+    <div className='w-full h-full flex flex-col gap-4'>
+      <h2 className='font-bold'>Admins Vs Users</h2>
       {isLoading && (<div className='text-red-500'>Loading...</div>)}
       {error && ( 
         <div className='text-red-500'>Failed to get data</div>
       )}
       {!isLoading && (
-        <div className="w-full h-5 bg-red-500"
+        <div className="w-full h-10 bg-red-500"
         onMouseEnter={(e)=>setOnMouseEnter({field: "admins", x: e.clientX, y: e.clientY})}
         onMouseMove={(e)=>setOnMouseEnter(prev => prev ? {...prev, x: e.clientX, y: e.clientY}: null)}
         onMouseLeave={()=>setOnMouseEnter(null)}
