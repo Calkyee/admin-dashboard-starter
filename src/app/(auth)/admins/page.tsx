@@ -9,7 +9,7 @@ import TotalAdminsVsUsersCard from '@/components/Cards/TotalAdminsVsUsersCard';
 
 const Page = () => {
   const topCardsCss = ` 
-  col-span-1 row-span-2 
+  col-span-1 row-span-1
   p-4 rounded 
   shadow-lg 
   bg-white
