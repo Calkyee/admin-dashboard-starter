@@ -87,14 +87,16 @@ export const authOptions: NextAuthOptions = {
           }); 
           if(!storedVerficationToken){ 
             // verification token existed but wasn't valid, eg deleted or expired. 
-            const storedSession = await prisma.session.findFirst({ 
+            const isCurrentSession = await prisma.session.findFirst({ 
               where: { userId: user.id}
             }); 
 
-            await prisma.session.delete({ 
-              where: {id: storedSession?.id}
-            }); 
-
+            // Only delete current sessions 
+            if(isCurrentSession){ 
+              await prisma.session.delete({ 
+                where: {id: isCurrentSession?.id}
+              });
+            }
             throw new Error("Invalid verification token") 
           }
 
