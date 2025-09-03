@@ -17,7 +17,7 @@ const Page = () => {
   const [onClick, setOnClick] = useState<onClickProps | null>(null); 
   const topCardsCss = ` 
   col-span-1 row-span-1
-  p-4 rounded 
+  rounded 
   shadow-lg 
   bg-white
   `
