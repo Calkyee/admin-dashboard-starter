@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import onClickProps from '@/lib/interfaces/onClickProps';
+import { Session, SessionSchema } from "@/zod"; 
 
 interface Props {
   setOnClick: React.Dispatch<React.SetStateAction<onClickProps | null>>;
@@ -7,10 +8,20 @@ interface Props {
 
 const LoggedInAdmins = ({ setOnClick }: Props) => {
   const [animateIn, setAnimateIn] = useState(false);
+  const [sessions, setSessions] = useState(); 
 
   useEffect(() => {
+    
     const timeout = setTimeout(() => setAnimateIn(true), 2); // slight delay triggers transition
-    return () => clearTimeout(timeout);
+    const getSessions = async()=>{ 
+
+    }
+    // Initial fetch 
+    getSessions(); 
+    
+    return () => {
+      clearTimeout(timeout);
+    }
   }, []);
 
   const ExitPage = () => {
@@ -29,6 +40,17 @@ const LoggedInAdmins = ({ setOnClick }: Props) => {
       >
         Back to Administrators Page
       </button>
+      <div className='
+        w-full h-full grid grid-rows-4 grid-cols-4 pt-4
+        border-1 border-black 
+      '>
+        <div className='
+        row-span-2 col-span-1 border-1 border-blue-500
+        '>
+          
+        </div>      
+
+      </div>
     </div>
   );
 };
