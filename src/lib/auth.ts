@@ -73,6 +73,15 @@ export const authOptions: NextAuthOptions = {
         token.id = (user as UserType).id; 
         token.role = (user as UserType).role ?? "ADMIN";
         token.email = user.email;
+        const verificationToken = crypto.randomUUID(); 
+        token.verificationToken = verificationToken;
+        await prisma.verificationToken.create({ 
+          data: { 
+            identifier: user.id, 
+            token: verificationToken, 
+            expires: new Date(Date.now() + 1000 * 60 * 60) // 1 hour 
+          }
+        })
         if ("ADMIN" in user) {
           token.permissions = (user as { admin?: { permissions: string[] } }).admin?.permissions ?? [];
         }
@@ -114,6 +123,10 @@ export const authOptions: NextAuthOptions = {
     async signOut({ token }){ 
       await prisma.session.deleteMany({ 
         where: {userId: token.id as string}
+      })
+      
+      await prisma.verificationToken.deleteMany({ 
+        where: {identifier: token.id as string}
       })
     }
   },
