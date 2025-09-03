@@ -41,7 +41,7 @@ const AdminCard = () => {
   return (
     <>
       <AdminNavBar setOriginalAdmins={setOriginalAdmins} expandedAdminId={expandedAdminId} originalAdmins={originalAdmins} setAdmins={setAdmins} admins={admins}/>
-      <div className="flex flex-1 gap-4 flex-col overflow-y-auto max-h-[400px]">
+      <div className="flex flex-1 flex-col overflow-y-auto max-h-full">
         <h2>Admins</h2>
         {isLoading && <p>Loading admins...</p>}
         {error && <p className="text-red-500">{error}</p>}
