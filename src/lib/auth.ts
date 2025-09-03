@@ -78,6 +78,7 @@ export const authOptions: NextAuthOptions = {
             token.permissions = (user as { admin?: { permissions: string[] } }).admin?.permissions ?? [];
         } 
         let verificationToken; 
+        let isSession; 
         
         if(token.verificationToken){ 
           // Session exists 
@@ -99,7 +100,13 @@ export const authOptions: NextAuthOptions = {
             }
             throw new Error("Invalid verification token") 
           }
-
+          isSession = await prisma.session.findFirst({ 
+            where: { userId: user.id }
+          })
+          if(!isSession){ 
+            // Only re-validate verification token when a session exists 
+            throw new Error("No session found"); 
+          }
           await prisma.verificationToken.update({ 
             where: {id: storedVerficationToken?.id}, 
             data: { 
@@ -109,6 +116,13 @@ export const authOptions: NextAuthOptions = {
 
           return token; 
         }
+        isSession = await prisma.session.findFirst({ 
+          where: {userId: user.id }
+        })
+        if(!isSession){ 
+          throw new Error("No session found")
+        }
+
         verificationToken = crypto.randomUUID(); 
         await prisma.verificationToken.create({ 
           data: { 
