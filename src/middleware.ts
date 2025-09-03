@@ -11,19 +11,6 @@ export async function middleware(req: NextRequest) {
     role: string; 
   };
 
-
-  const valid = await prisma.verificationToken.findFirst({
-    where: {
-      identifier: token?.id,
-      token: token?.verificationToken,
-      expires: { gt: new Date() },
-    },
-  });
-  
-  if(!valid){ 
-    return NextResponse.redirect(new URL('/login', req.url)); 
-  }
-
   if (req.nextUrl.pathname.startsWith("/api/secure")) {
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
