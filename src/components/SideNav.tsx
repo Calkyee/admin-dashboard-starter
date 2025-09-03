@@ -2,6 +2,7 @@
 import React from 'react'
 import { useSession } from 'next-auth/react';
 import SideNavButton from '@/components/NavComponents/SideNavButton'; 
+import SignOutButton from "@/components/NavComponents/SignOutButton"; 
 
 
 const SideNav = () => {
@@ -25,7 +26,11 @@ const SideNav = () => {
       <SideNavButton href='/admins' isLoading={isloading}>
         Administrators
       </SideNavButton>
-
+      {status === 'authenticated' && ( 
+      <SignOutButton>
+        Logout
+      </SignOutButton>
+      )}
     </nav>
   )
 }
