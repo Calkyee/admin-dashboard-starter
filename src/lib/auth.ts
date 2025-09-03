@@ -87,9 +87,19 @@ export const authOptions: NextAuthOptions = {
 
   events: {
     async session ({token}){ 
+      const userId = token.id as string;
+      // Delete expired sessions  
       await prisma.session.deleteMany({ 
-        where: { userId: token.id as string}
+        where: { 
+          userId,
+           expires: { lt: new Date() },
+        }
       })
+      // Only keep 1 session at at time 
+      await prisma.session.deleteMany({ 
+        where: { userId }
+      })
+
       const sessionToken = crypto.randomUUID(); 
       await prisma.session.create({ 
         data: { 
