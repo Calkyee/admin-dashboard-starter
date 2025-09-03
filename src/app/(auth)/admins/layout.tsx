@@ -8,10 +8,13 @@ interface Props {
 const Layout = ({children}: Props) => {
   return (
     <div className='
-     flex-1 flex flex-col 
+     w-full h-screen
     '>
-      <TopNav />  
-      <div className="flex-1 gap-6 grid grid-rows-4 grid-cols-4 p-4">
+      <div className="
+        grid grid-cols-4 grid-rows-4 max-h-full h-full
+        p-4 gap-2
+
+      ">
         {children}
       </div>
     </div>
