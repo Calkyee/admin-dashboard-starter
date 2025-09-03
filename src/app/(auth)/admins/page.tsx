@@ -1,4 +1,7 @@
-import React from 'react'
+'use client'; 
+import React, { useState } from 'react'
+
+import onClickProps from '@/lib/interfaces/onClickProps'; 
 
 import AdminCard from '@/components/Cards/AdminCard';
 import CurrentAdminsCard from '@/components/Cards/CurrentAdminsCard';
@@ -7,7 +10,11 @@ import WeeklyUsersCard from '@/components/Cards/WeeklyUsersCard';
 import FailedAdminCard from '@/components/Cards/FailedAdminCard'; 
 import TotalAdminsVsUsersCard from '@/components/Cards/TotalAdminsVsUsersCard';
 
+// Card Pages 
+import LoggedInAdmins from '@/components/Cards/Pages/Admins/LoggedInAdmins';
+
 const Page = () => {
+  const [onClick, setOnClick] = useState<onClickProps | null>(null); 
   const topCardsCss = ` 
   col-span-1 row-span-1
   p-4 rounded 
@@ -25,6 +32,11 @@ const Page = () => {
   p-4 rounded  
   flex flex-col gap-5
   `
+  if(onClick?.Card === 'CurrentsLoggedIn' && onClick.Active){ 
+    return ( 
+      <LoggedInAdmins setOnClick={setOnClick}/>
+    )
+  }
 
   return (
     <>
@@ -32,7 +44,7 @@ const Page = () => {
       <CurrentAdminsCard />
     </div>
     <div className={topCardsCss}>
-     <CurrentAdminsLoggedInCard />
+     <CurrentAdminsLoggedInCard setOnClick={setOnClick}/>
     </div>
     <div className={topCardsCss}>
       <WeeklyUsersCard />
