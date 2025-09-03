@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/store/prisma";
 import { compare } from "bcrypt";
 import { UserSchema } from "@/zod"; 
-import { z } from "zod";
+import { date, z } from "zod";
 
 type UserType = z.infer<typeof UserSchema>;
 
@@ -73,18 +73,49 @@ export const authOptions: NextAuthOptions = {
         token.id = (user as UserType).id; 
         token.role = (user as UserType).role ?? "ADMIN";
         token.email = user.email;
-        const verificationToken = crypto.randomUUID(); 
-        token.verificationToken = verificationToken;
+        // Check perms 
+        if ("ADMIN" in user) {
+            token.permissions = (user as { admin?: { permissions: string[] } }).admin?.permissions ?? [];
+        } 
+        let verificationToken; 
+        
+        if(token.verificationToken){ 
+          // Session exists 
+          verificationToken = token.verificationToken
+          const storedVerficationToken = await prisma.verificationToken.findFirst({ 
+            where: {token: verificationToken}
+          }); 
+          if(!storedVerficationToken){ 
+            // verification token existed but wasn't valid, eg deleted or expired. 
+            const storedSession = await prisma.session.findFirst({ 
+              where: { userId: user.id}
+            }); 
+
+            await prisma.session.delete({ 
+              where: {id: storedSession?.id}
+            }); 
+
+            throw new Error("Invalid verification token") 
+          }
+
+          await prisma.verificationToken.update({ 
+            where: {id: storedVerficationToken?.id}, 
+            data: { 
+              expires: new Date(Date.now() + 1000 * 60 * 60 ) // 1 hour 
+            }
+          })
+
+          return token; 
+        }
+        verificationToken = crypto.randomUUID(); 
         await prisma.verificationToken.create({ 
           data: { 
-            identifier: user.id, 
+            identifier: verificationToken, 
             token: verificationToken, 
-            expires: new Date(Date.now() + 1000 * 60 * 60) // 1 hour 
+            expires: new Date(Date.now() + 1000 * 60 * 60 ) // 1 hour 
           }
-        })
-        if ("ADMIN" in user) {
-          token.permissions = (user as { admin?: { permissions: string[] } }).admin?.permissions ?? [];
-        }
+        })        
+
       }
       return token;
     },
