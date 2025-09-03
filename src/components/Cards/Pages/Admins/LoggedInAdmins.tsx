@@ -55,9 +55,8 @@ const MapLoggedInAdmins = ({})=>{
     setIsLoading(true); 
     const getSessions = async ()=>{ 
       const res = await fetch ('/api/secure/sessions/getSessions', {credentials: 'include'}); 
-      let data; 
       try{
-        data = await res.json(); 
+        const data = await res.json(); 
         const allSessions: Session[] = data.currentSessions; 
 
         for(const s of allSessions){ 
@@ -71,9 +70,8 @@ const MapLoggedInAdmins = ({})=>{
         // All data is Valid beyound this point. 
         setSessions(allSessions); 
         setIsLoading(false); // Runs every time no matter what  
-      }catch(err){ 
-        data = await res.text(); 
-        console.log('[ERROR MAPPING ADMINS]: ', err ?? data); 
+      }catch(err){  
+        console.log('[ERROR MAPPING ADMINS]: ', err); 
       }
     }
 
