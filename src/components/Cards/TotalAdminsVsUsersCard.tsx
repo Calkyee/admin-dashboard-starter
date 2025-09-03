@@ -97,15 +97,15 @@ const TotalAdminsVsUsersCard = () => {
       )}
       {!isLoading && (
         <>
-        <div className="w-full h-10 bg-red-500"
-          onMouseEnter={(e)=>setOnMouseEnter({field: "admins", x: e.clientX, y: e.clientY})}
+        <div className="w-full h-10 bg-green-500"
+          onMouseEnter={(e)=>setOnMouseEnter({field: "Users", x: e.clientX, y: e.clientY})}
           onMouseMove={(e)=>setOnMouseEnter(prev => prev ? {...prev, x: e.clientX, y: e.clientY}: null)}
           onMouseLeave={()=>setOnMouseEnter(null)}
           >
           <div
             style={{ width: `${Math.min((users / admins) * 100, 100)}%` }}
-            className="bg-green-500 h-full"
-            onMouseEnter={(e)=>setOnMouseEnter({field: 'Users', x: e.clientX, y: e.clientY})}
+            className="bg-red-500 h-full"
+            onMouseEnter={(e)=>setOnMouseEnter({field: "admins", x: e.clientX, y: e.clientY})}
             onMouseMove={(e)=>setOnMouseEnter(prev => prev ? {...prev, x: e.clientX, y: e.clientY } : null)}
             onMouseLeave={()=>setOnMouseEnter(null)}
           />
