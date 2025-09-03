@@ -21,9 +21,8 @@ const TotalAdminsVsUsersCard = () => {
     setLoading(true); 
     const getPrevious7DaysLogins = async()=>{ 
       const res = await fetch('/api/secure/sessions/getSessions', {credentials: 'include'}); 
-      let data; 
       try{
-        data = await res.json();
+        const data = await res.json();
         const sessions: Session[] = data.currentSessions; 
         
         for(const s of sessions){ 
@@ -53,10 +52,9 @@ const TotalAdminsVsUsersCard = () => {
         setPrevious14DaysLogin(previous7DaysSessions.length - previous14DaysSessions.length); 
         
       }catch(err){ 
-        if(err && !res.ok){ 
-          data = await res.text(); 
-          setError(data); 
-          console.error("[GET SESSIONS ERROR]: ", data);
+        if(err && !res.ok){  
+          setError('Unable to get sessions'); 
+          console.error("[GET SESSIONS ERROR]: ", err);
         }
       }
     }
@@ -64,18 +62,16 @@ const TotalAdminsVsUsersCard = () => {
     const getAdmins = async()=>{ 
       getPrevious7DaysLogins();
       const res = await fetch('/api/secure/admins/getAdmins', {credentials: 'include'}); 
-      let data; 
       try{
-        data = await res.json(); 
+        const data = await res.json(); 
         const resAdmins: Admin[] = data.admins; 
         setAdmins(resAdmins.length); 
         setUsers(5) // Dummy data cause the Users route does not exist yet
         setLoading(false); 
       }catch(err){ 
-        if(err && !res.ok){
-          data = await res.text(); 
-          setError(data); 
-          console.error('[GET ADMINS ERROR]: ', data); 
+        if(err && !res.ok){ 
+          setError('Unable to get admins'); 
+          console.error('[GET ADMINS ERROR]: ', err); 
         }
       }  
     }
