@@ -65,7 +65,11 @@ const FailedAdminCard = () => {
   }, [])
 
   return (
-    <>
+    <div className='
+      w-full h-full 
+      p-4 rounded 
+      border border-transparent hover:border-black 
+    '>
       <h2>Failed Login Attempts <span className='font-bold'> {failedLoginAttempts?.length ?? 0}</span></h2>
       { isLoading && ( 
         <div>Loading...</div>
@@ -96,7 +100,7 @@ const FailedAdminCard = () => {
         </ResponsiveContainer>
 
       )}
-    </>
+    </div>
   )
 }
 
