@@ -76,6 +76,7 @@ const MapLoggedInAdmins = ({})=>{
   const handleDeleteSessions = ({id}: {id: string})=>{ 
     const deleteSessions = async()=>{ 
       const res = await fetch('/api/secure/verificationToken/delVerificationToken', { 
+        method: 'DELETE', 
         credentials: 'include', 
         headers: {'Content-Type': 'application/json'}, 
         body: JSON.stringify({ 
