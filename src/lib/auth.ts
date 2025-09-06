@@ -63,6 +63,7 @@ export const authOptions: NextAuthOptions = {
           email: validUser.email,
           role: validUser.role,
           admin: user.admin,
+          permissions: user.admin?.permissions ?? []
         };
       },
     }),
@@ -71,8 +72,8 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = (user as UserType).id; 
-        token.role = (user as UserType).role ?? "ADMIN";
+        token.id = user.id; 
+        token.role = user.role ?? "ADMIN";
         token.email = user.email;
         // Check perms 
         if ("ADMIN" in user) {
