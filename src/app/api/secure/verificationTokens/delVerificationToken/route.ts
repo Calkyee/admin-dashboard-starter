@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { sendToUser } from "@/app/api/secure/events/route"; 
+import { prisma } from "@/lib/store/prisma"; 
 
 import { z, ZodError } from 'zod'; 
 import { VerificationTokenSchema } from "@/zod";
@@ -24,8 +25,30 @@ export async function DELETE(req: NextRequest){
       }, {status: 400}); 
     }
     const {identifier, includeSession} = validated.data; 
+    const token = await prisma.verificationToken.findFirst({ 
+      where: { identifier }
+    }); 
+
+    if(token){ 
+      await prisma.verificationToken.deleteMany({ // Delete Tokens  
+        where: { identifier }
+      })
+    }
 
     if(includeSession){ 
+      const session = await prisma.session.findFirst({ 
+        where: { userId: identifier}
+      }); 
+      if(!session){ 
+        return NextResponse.json({ 
+          error: "No Sessions found"
+        }, {status: 404}); 
+      }
+
+      await prisma.session.deleteMany({ 
+        where: { userId: identifier }
+      }); 
+      
       const ok = sendToUser(identifier, 'force-kick'); 
       if(!ok){ 
         return NextResponse.json({error: "Failed to kick user from session"}, {status: 400}); 
