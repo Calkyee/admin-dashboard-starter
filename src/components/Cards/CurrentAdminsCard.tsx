@@ -40,7 +40,11 @@ const CurrentAdminsCard = () => {
   }, []) // Load users on load 
 
   return (
-    <>
+    <div className='
+      w-full h-full 
+      p-4 rounded 
+      border border-transparent hover:border-black
+    '>
       <h2>Current Admins <span className='font-bold'> {numberOfUsers}</span></h2>
       {isloading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isloading && ( 
@@ -66,8 +70,7 @@ const CurrentAdminsCard = () => {
 
         </>
       )}
-    
-    </>
+    </div>
   )
 }
 
