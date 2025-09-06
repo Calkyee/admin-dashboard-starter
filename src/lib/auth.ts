@@ -6,6 +6,7 @@ import { prisma } from "@/lib/store/prisma";
 import { compare } from "bcrypt";
 import { UserSchema } from "@/zod"; 
 import { date, z } from "zod";
+import { UNABLE_TO_FIND_POSTINSTALL_TRIGGER_JSON_SCHEMA_ERROR } from "@prisma/client/scripts/postinstall.js";
 
 type UserType = z.infer<typeof UserSchema>;
 
@@ -78,65 +79,70 @@ export const authOptions: NextAuthOptions = {
             token.permissions = (user as { admin?: { permissions: string[] } }).admin?.permissions ?? [];
         } 
         let verificationToken; 
-        let isSession; 
-        
+
+        // Check for Current verificationToken 
         if(token.verificationToken){ 
-          // Session exists 
-          verificationToken = token.verificationToken
-          const storedVerficationToken = await prisma.verificationToken.findFirst({ 
-            where: {token: verificationToken}
+          const storedVerificationToken = await prisma.verificationToken.findFirst({ 
+            where: {identifier: user.id}
           }); 
-          if(!storedVerficationToken){ 
-            // verification token existed but wasn't valid, eg deleted or expired. 
-            const isCurrentSession = await prisma.session.findFirst({ 
-              where: { userId: user.id}
+          const isSession = await prisma.session.findFirst({ 
+            where: { userId: user.id}
+          }); 
+
+          if(storedVerificationToken?.token !== token.verificationToken && isSession){
+            await prisma.session.deleteMany({ // Clean up Sessions  
+              where: {userId: user.id}
+            })  
+            
+            delete token.verificationToken; 
+            token.isInvalid = true;
+
+            return token; 
+          }else if(storedVerificationToken?.token !== verificationToken){ 
+            // Delete token in database and in user 
+            await prisma.verificationToken.delete({ 
+              where: { id: storedVerificationToken.id }
+            })
+            delete token.verificationToken; 
+            token.isInvalid = true; 
+            return token; 
+          }
+
+          // Beyound this point verification token is valid  
+          if(!isSession){ 
+            // No current session but valid verification token 
+            await prisma.verificationToken.deleteMany({ 
+              where: { identifier: user.id }
             }); 
 
-            // Only delete current sessions 
-            if(isCurrentSession){ 
-              await prisma.session.delete({ 
-                where: {id: isCurrentSession?.id}
-              });
-            }
-            throw new Error("Invalid verification token") 
+            delete token.verificationToken;
+            token.isInvalid = true;  
+            return token; 
           }
-          isSession = await prisma.session.findFirst({ 
+        }else if(!token.verificationToken && user){ 
+          // First time login 
+          await prisma.session.deleteMany({ // Clean up previous sessions  
             where: { userId: user.id }
           })
-          if(!isSession){ 
-            // Only re-validate verification token when a session exists 
-            throw new Error("No session found"); 
-          }
-          await prisma.verificationToken.update({ 
-            where: {id: storedVerficationToken?.id}, 
+          verificationToken = crypto.randomUUID(); 
+          await prisma.verificationToken.create({ 
             data: { 
+              identifier: user.id,
+              token: verificationToken, 
               expires: new Date(Date.now() + 1000 * 60 * 60 ) // 1 hour 
             }
           })
-
-          return token; 
+          token.verificationToken = verificationToken; 
         }
-        isSession = await prisma.session.findFirst({ 
-          where: {userId: user.id }
-        })
-        if(!isSession){ 
-          throw new Error("No session found")
-        }
-
-        verificationToken = crypto.randomUUID(); 
-        await prisma.verificationToken.create({ 
-          data: { 
-            identifier: verificationToken, 
-            token: verificationToken, 
-            expires: new Date(Date.now() + 1000 * 60 * 60 ) // 1 hour 
-          }
-        })        
-
       }
       return token;
     },
     async session({ session, token }) {
       (session.user as { role?: string }).role = token.role as string; 
+      if(token.isInvalid && session.user){ 
+        session.user.name = null;  
+        session.user.email = null;  
+      }
       return session;
     },
   },
