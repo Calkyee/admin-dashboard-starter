@@ -93,7 +93,7 @@ const MapLoggedInAdmins = ({})=>{
                 '>
                 <div className='flex flex-row justify-between'>
                   <h2>UserId: {s.userId}</h2>
-                  <button onClick={()=>handleDeleteSessions({id: s.id})} 
+                  <button onClick={()=>handleDeleteSessions({id: s.userId})} 
                     className='
                       text-black 
                       hover:bg-gray-400 p-1 rounded cursor-pointer
