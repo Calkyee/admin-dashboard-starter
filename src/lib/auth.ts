@@ -141,8 +141,9 @@ export const authOptions: NextAuthOptions = {
       (session.user as { role?: string }).role = token.role as string; 
       if(token.isInvalid && session.user){ 
         session.user.name = null;  
-        session.user.email = null;  
+        session.user.email = null;          
       }
+      session.user.id = token.id as string; 
       return session;
     },
   },
