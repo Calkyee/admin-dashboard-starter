@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import AnimatePageSwapping from '@/lib/AnimatePageSwapping'; 
+import AnimatePageSwapping from '@/lib/AnimatePageSwapping';
+
 import onClickProps from '@/lib/interfaces/onClickProps';
 import { Session, SessionSchema } from "@/zod"; 
 
@@ -73,7 +74,24 @@ const MapLoggedInAdmins = ({})=>{
   },  []); 
 
   const handleDeleteSessions = ({id}: {id: string})=>{ 
+    const deleteSessions = async()=>{ 
+      const res = await fetch('/api/secure/verificationToken/delVerificationToken', { 
+        credentials: 'include', 
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify({ 
+          identifier: id, 
+          includeSession: true // Send request to kick user out
+        })
+      }); 
 
+      if(!res.ok){ 
+        console.error('[DELETE SESSIONS ERROR]: ', await res.text()); 
+        return; 
+      }
+      const data = await res.json(); 
+      console.log('[DELETING SESSIONS RESPONSE]: ', data); 
+    }
+    deleteSessions(); 
   }
   return ( 
     <>
