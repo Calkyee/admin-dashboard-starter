@@ -85,13 +85,6 @@ const CurrentAdminsLoggedInCard = ({setOnClick, onClick}: Props) => {
     {name: "Not Logged In", value: notLoggedIn}
   ]; 
 
-  const handleOnClick = ()=>{ 
-    setOnClick({ 
-      Card: 'CurrentsLoggedIn', 
-      Active: true, 
-    }); 
-  }
-
   return (
     <div className='
     w-full h-full
@@ -106,7 +99,7 @@ const CurrentAdminsLoggedInCard = ({setOnClick, onClick}: Props) => {
         font-bold 
         text-center 
         '> {currentSessions}</span></h2>
-      {hover && ( 
+      {hover && !isLoading && ( 
         <button className='
         absolute 
         right-0 top-0 
