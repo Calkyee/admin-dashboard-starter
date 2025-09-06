@@ -96,15 +96,24 @@ const CurrentAdminsLoggedInCard = ({setOnClick, onClick}: Props) => {
     <div className='
     w-full h-full
     p-4 rounded 
-    hover:border-1 hover:border-black 
+    border border-transparent hover:border-black 
     ' 
       onMouseEnter={()=>setHover(true)}
       onMouseLeave={()=>setHover(false)}
     > 
-      <div className='w-full h-fit flex justify-between'>
-      <h2>Current Admins logged in <span className='font-bold'> {currentSessions}</span></h2>
+      <div className='w-full h-fit relative'>
+      <h2>Current Admins logged in <span className=' 
+        font-bold 
+        text-center 
+        '> {currentSessions}</span></h2>
       {hover && ( 
-        <button className='bg-black text-white px-2 py-1 rounded cursor-pointer'
+        <button className='
+        absolute 
+        right-0 top-0 
+        bg-black text-white 
+        px-2 py-1 
+        rounded 
+        cursor-pointer'
         onClick={()=>setOnClick({Card: 'CurrentsLoggedIn', Active: true})}
         >View More</button>
       )}  
@@ -112,7 +121,7 @@ const CurrentAdminsLoggedInCard = ({setOnClick, onClick}: Props) => {
       {error && (<h2 className='text-red-500'>{error}</h2>)}
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isLoading && currentSessions !== 0 && ( 
-        <>
+        <div className='w-full h-full '>
           {/* Chart for rendering data here */}
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -131,7 +140,7 @@ const CurrentAdminsLoggedInCard = ({setOnClick, onClick}: Props) => {
           <Tooltip />
           </PieChart>
         </ResponsiveContainer>        
-        </>
+      </div>
       )
       }
     </div>
