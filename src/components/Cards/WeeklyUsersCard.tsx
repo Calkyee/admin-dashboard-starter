@@ -66,7 +66,11 @@ const WeeklyUsersCard = () => {
   if(!chartData) return; 
   const reversedData = [...chartData].reverse(); 
   return (
-    <>
+    <div className='
+      w-full h-full 
+      p-4 rounded 
+      border border-transparent hover:border-black 
+    '>
       <h2>Weekly Admin Logins for the past 7 days</h2>
       {error && (<h2 className='text-red-500'>{error}</h2>)}
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
@@ -93,7 +97,7 @@ const WeeklyUsersCard = () => {
         <h2 className='text-red-500'>No active sessions</h2>
       )}
     
-    </>
+    </div>
   )
 }
 
