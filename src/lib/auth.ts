@@ -6,7 +6,6 @@ import { prisma } from "@/lib/store/prisma";
 import { compare } from "bcrypt";
 import { UserSchema } from "@/zod"; 
 import { date, z } from "zod";
-import { UNABLE_TO_FIND_POSTINSTALL_TRIGGER_JSON_SCHEMA_ERROR } from "@prisma/client/scripts/postinstall.js";
 
 type UserType = z.infer<typeof UserSchema>;
 
