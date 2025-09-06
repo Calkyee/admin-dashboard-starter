@@ -73,7 +73,25 @@ const MapLoggedInAdmins = ({})=>{
   },  []); 
 
   const handleDeleteSessions = ({id}: {id: string})=>{ 
+    const delSessions = async()=>{ 
+      const res = await fetch('/api/secure/verificationTokens/delVerificationToken', { 
+        method: 'DELETE', 
+        credentials: 'include', 
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify({ 
+          identifier: id, 
+          includeSession: true 
+        })
+      }); 
+      if(!res.ok){ 
+        console.error('[DELETE SESSIONS]: ', await res.text()); 
+        return; 
+      }
 
+      const data = await res.json(); 
+      console.log("[DELETE SESSIONS]: ", data); 
+    }
+    delSessions(); 
   }
   return ( 
     <>
