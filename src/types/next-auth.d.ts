@@ -19,6 +19,6 @@ declare module 'next-auth' {
     role?: string; 
     permissions?: string[]; 
     verificationToken: string; 
-    isINvalid?: boolean; 
+    isInvalid?: boolean; 
   }
 }
