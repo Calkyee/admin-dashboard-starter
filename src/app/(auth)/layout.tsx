@@ -19,23 +19,28 @@ const Layout = ({children}: Props) => {
     if(status === 'unauthenticated'){ 
       return router.push('/login'); 
     }
-    if(status === 'authenticated'){ 
-      console.log('[SSE]: Opening connection for user', data.user?.id); 
-      const es = new EventSource(`/api/secure/events?userId=${data.user?.id}`); 
-      es.onopen = ()=>{ 
-        console.log('[SSE]: Connected Successfully')
-      } 
-      es.onmessage = (e)=>{ 
-        console.log('[SEE MESSAGE]: ',  e.data); 
-        if(e.data === 'force-kick'){ 
-          console.log("[SSE]: Received force kick -> signing out"); 
-          signOut(); 
-        }
-      }
-    }
-
+    
+    
   }, [data, status, router]); 
-  
+      
+  useEffect(() => {
+    if (status !== "authenticated" || !data?.user?.id) return;
+    console.log('[SEE]: Opening connection...')
+    const es = new EventSource(`/api/secure/events?userId=${data.user.id}`);
+    es.onopen = () => console.log("[SSE]: Connected Successfully");
+    es.onmessage = (e) => { 
+      if(e.data === 'force-kick'){ 
+        signOut(); 
+      }
+    };
+
+    return () => {
+      console.log("[SSE]: Closing connection");
+      es.close();
+    };
+  }, [status, data?.user?.id]);
+
+
   if(status === 'loading'){ 
     return (
       <div>
