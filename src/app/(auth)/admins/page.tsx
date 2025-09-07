@@ -12,6 +12,7 @@ import TotalAdminsVsUsersCard from '@/components/Cards/TotalAdminsVsUsersCard';
 
 // Card Pages 
 import LoggedInAdmins from '@/components/Cards/Pages/Admins/LoggedInAdmins';
+import FailedAdminLogins from "@/components/Cards/Pages/Admins/FailedAdminLogins.tsx";
 
 const Page = () => {
   const [onClick, setOnClick] = useState<onClickProps | null>(null); 
