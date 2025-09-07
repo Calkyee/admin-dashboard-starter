@@ -10,21 +10,27 @@ const MapFailedLogins = ()=>{
 
   useEffect(()=>{
     setIsLoading(true);
-    (async ()=>{
+    const fetchData = async()=>{
       try{
         const recievedData: FailedLogin[] = await getFailedLogins();
         for(const f of recievedData){
           const isValidated = FailedLoginSchema.safeParse(f);
           if(!isValidated.success){
-            console.error('[VALIDATION ERROR]: ', isValidated.error.flatten());
+            console.error('[VALIDATION ERROR', isValidated.error.flatten());
             return;
           }
         }
-        setData(recievedData);
+
+        if(JSON.stringify(recievedData) !== JSON.stringify(data)){
+          setData(recievedData);
+        }
       }finally{
         setIsLoading(false);
-      }}
-    )();
+      }
+    }
+    fetchData();
+    const interval = setInterval(fetchData, 500);
+    return () => clearInterval(interval);
   }, [])
   return (
     <>
