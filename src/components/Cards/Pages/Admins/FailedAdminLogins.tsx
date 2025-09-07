@@ -31,7 +31,13 @@ const FailedAdminLogins =  ({setOnClick}: Props)=>{
             '
           >Back to Adminsitrators page</button>
         </div>
-        <div>
+        <div className='
+          w-full h-full
+          grid grid-cols-4 grid-rows-4
+        '>
+          <div className='row-span-2 col-span-1  border-1 border-black p-2'>
+            <MapFailedLogins/>
+          </div>
 
         </div>
       </AnimatePageSwapping>
