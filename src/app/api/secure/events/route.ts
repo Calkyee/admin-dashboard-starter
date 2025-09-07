@@ -33,11 +33,3 @@ export async function GET(req: NextRequest){
     }
   })
 }
-export function sendToUser (userId: string, msg: string){ 
-  console.log('[SSE CONNECTED]: ', userId); 
-  const writer = connections.get(userId); 
-  if(!writer) return false; 
-  const encoder = new TextEncoder(); 
-  writer.write(encoder.encode(`data: ${msg}\n\n`)); 
-  return true; 
-}
