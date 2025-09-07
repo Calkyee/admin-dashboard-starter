@@ -28,8 +28,10 @@ const MapFailedLogins = ()=>{
   }, [])
   return (
     <>
-
-
+      <ul>{ !isLoading && data ? (data.map((f)=>(
+        <li key={f.id}>User: {f.userId}</li>
+      )) ) : ( <h2 className='font-bold'>No Failed Logins found!</h2> )
+      }</ul>
     </>
   )
 }
