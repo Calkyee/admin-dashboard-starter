@@ -71,7 +71,7 @@ const WeeklyUsersCard = () => {
       p-4 rounded 
       border border-transparent hover:border-black 
     '>
-      <h2>Weekly Admin Logins for the past 7 days</h2>
+      <h2 className="mb-2">Weekly Admin Logins for the past 7 days</h2>
       {error && (<h2 className='text-red-500'>{error}</h2>)}
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isLoading && !error && chartData ? (
