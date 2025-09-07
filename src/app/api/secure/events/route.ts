@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-
+import { registerConnection, removeConnection } from "@/lib/sse";
 const connections = new Map<string, WritableStreamDefaultWriter>(); 
 
 export async function GET(req: NextRequest){ 
@@ -10,20 +10,20 @@ export async function GET(req: NextRequest){
     return NextResponse.json({error: "Missing userId"}, {status: 400}); 
   }
 
-  const stream = new TransformStream(); 
-  const writer = stream.writable.getWriter(); 
-  connections.set(userId, writer); 
+  const stream = new TransformStream();
+  const writer = stream.writable.getWriter();
+  registerConnection(userId, writer);
 
-  const encoder = new TextEncoder(); 
-  const interval = setInterval(() => {
-      writer.write(encoder.encode("data: ping\n\n")); 
+  const encoder = new TextEncoder();
+  const interval = setInterval(()=>{
+    writer.write(encoder.encode("data: ping\n\n"))
   }, 15000);
 
-  req.signal.addEventListener("abort", ()=>{ 
-    clearInterval(interval); 
-    connections.delete(userId); 
-    writer.close(); 
-  })
+  req.signal.addEventListener("abort", ()=>{
+    clearInterval(interval);
+    removeConnection(userId);
+    writer.close();
+  });
 
   return new Response(stream.readable, { 
     headers: { 
@@ -33,9 +33,6 @@ export async function GET(req: NextRequest){
     }
   })
 }
-
-
-
 export function sendToUser (userId: string, msg: string){ 
   console.log('[SSE CONNECTED]: ', userId); 
   const writer = connections.get(userId); 
