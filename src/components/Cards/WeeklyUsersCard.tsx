@@ -75,24 +75,22 @@ const WeeklyUsersCard = () => {
       {error && (<h2 className='text-red-500'>{error}</h2>)}
       {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
       {!isLoading && !error && chartData ? (
-      <div className='w-full h-full py-6'>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="90%" aspect={2} height="90%">
           <LineChart data={reversedData}>
-            <Line 
+            <Line
               type="stepAfter"
-              dataKey="number" 
+              dataKey="number"
               stroke="#2563eb"
               strokeWidth={2}
               dot={false}
               isAnimationActive={false}
             />
             <Tooltip
-              labelFormatter={(label) => label === 0 ? `Date: Today` : `Date: ${label}`} 
-              formatter={(value) => [`Logins: ${value}`, '']}     
+              labelFormatter={(label) => label === 0 ? `Date: Today` : `Date: ${label}`}
+              formatter={(value) => [`Logins: ${value}`, '']}
             />
           </LineChart>
         </ResponsiveContainer>
-      </div>
       ) : !isLoading && ( 
         <h2 className='text-red-500'>No active sessions</h2>
       )}
