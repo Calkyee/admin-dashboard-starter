@@ -35,7 +35,7 @@ const FailedAdminLogins =  ({setOnClick}: Props)=>{
           w-full h-full
           grid grid-cols-4 grid-rows-4
         '>
-          <div className='row-span-2 col-span-1  border-1 border-black p-2'>
+          <div className='row-span-2 col-span-1  p-2'>
             <MapFailedLogins/>
           </div>
 
