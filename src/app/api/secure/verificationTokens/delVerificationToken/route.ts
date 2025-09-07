@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { sendToUser } from "@/app/api/secure/events/route"; 
+import { sendToUser } from "@/lib/sse.ts";
 import { prisma } from "@/lib/store/prisma"; 
 
 import { z, ZodError } from 'zod'; 
