@@ -14,8 +14,21 @@ const AnimatePageSwapping = ({children}: Props) => {
   }, []); 
 
   return (
-    <div className={`col-span-${animateIn ? '4' : '1'} row-span-${animateIn ? '4' : '1'} transition-all duration-900 [transition-timing-function:cubic-bezier(0.4,0,0.2,1)] h-full`}>
-      <div className={`h-full p-${animateIn ? '4' : '0'} rounded shadow-lg bg-white flex flex-col transition-all duration-1000 [transition-timing-function:cubic-bezier(0.4,0,0.2,1)] opacity-${animateIn ? '100' : '0'}`}>
+    <div className={`
+        col-span-${animateIn ? '4' : '1'} 
+        row-span-${animateIn ? '4' : '1'} 
+        transition-all duration-900 
+        ease-out 
+        h-full`}>
+      <div className={`
+        h-full bg-white rounded shadow-lg flex flex-col 
+        transform transition-transform duration-700 ease-out 
+        ${animateIn ? "scale-100" : "scale-90"}
+        transition-opacity duration-500 delay-200 
+        ${animateIn ? "opacity-100" : "opacity-0"}
+        p-${animateIn ? "4" : "0"}
+        `}
+      >
         {
           children
         }
