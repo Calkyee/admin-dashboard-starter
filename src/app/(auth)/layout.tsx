@@ -16,7 +16,7 @@ const Layout = ({children}: Props) => {
   useEffect(()=>{ 
     console.log('[USER  DATA]: ', data);
     if(status === 'loading') return;  
-    if(status === 'unauthenticated'){ 
+    if(status === 'unauthenticated'){
       return router.push('/login'); 
     }
     
@@ -30,9 +30,9 @@ const Layout = ({children}: Props) => {
     es.onopen = () => console.log("[SSE]: Connected Successfully");
     es.onmessage = (e) => { 
       if(e.data === 'force-kick'){ 
-        signOut(); 
+        return signOut();
       }
-    };
+};
 
     return () => {
       console.log("[SSE]: Closing connection");
