@@ -5,7 +5,7 @@ import getFailedLogins from "@/lib/UI/ServerComponents/GetFailedLogins";
 
 
 const MapFailedLogins = ()=>{
-  const [data, setData] = useState<FailedLogin[] | null>(null);
+  const [data, setData] = useState<FailedLogin[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(()=>{
