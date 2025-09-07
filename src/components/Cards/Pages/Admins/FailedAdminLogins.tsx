@@ -27,6 +27,7 @@ const FailedAdminLogins =  ({setOnClick}: Props)=>{
             px-2 py-1
             rounded
             cursor-pointer
+            mb-2
             '
           >Back to Adminsitrators page</button>
         </div>
