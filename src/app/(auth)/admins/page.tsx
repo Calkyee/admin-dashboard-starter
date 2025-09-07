@@ -56,7 +56,7 @@ const Page = () => {
       <WeeklyUsersCard />
     </div>
     <div className={topCardsCss}>
-      <FailedAdminCard />
+      <FailedAdminCard setOnClick={setOnClick}/>
     </div>
     <div className={leftCardsCss}>Card 5</div>
     <div className={menuCardCss}>
