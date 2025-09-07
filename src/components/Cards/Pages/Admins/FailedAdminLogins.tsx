@@ -2,6 +2,9 @@ import React from 'react';
 import AnimatePageSwapping from "@/lib/AnimatePageSwapping";
 import onClickProps from '@/lib/interfaces/onClickProps';
 
+// Import Custom Cards
+import MapFailedLogins from '@/lib/UI/MapFailedLogins';
+
 interface Props {
   setOnClick: React.Dispatch<React.SetStateAction<onClickProps | null>>;
 }
