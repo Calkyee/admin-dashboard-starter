@@ -37,6 +37,11 @@ const Page = () => {
       <LoggedInAdmins setOnClick={setOnClick}/>
     )
   }
+  if(onClick?.Card === 'FailedAdminsLogin' && onClick.Active){
+      return (
+          <FailedAdminLogins setOnClick={setOnClick}/>
+      )
+  }
 
   return (
     <>
