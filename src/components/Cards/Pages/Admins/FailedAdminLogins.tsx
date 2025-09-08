@@ -6,6 +6,7 @@ import onClickProps from '@/lib/interfaces/onClickProps';
 import MapFailedLogins from '@/lib/UI/MapFailedLogins';
 import {z} from "zod";
 import {FailedLoginSchema} from "@/zod";
+import PieChartForFailedAdminLogins from "@/lib/UI/PieChartForFailedAdminLogins";
 
 interface Props {
   setOnClick: React.Dispatch<React.SetStateAction<onClickProps | null>>;
@@ -38,7 +39,6 @@ const FailedAdminLogins =  ({setOnClick}: Props)=>{
   ] as FailedLoginArrayType;
 
   const [useMockData, setUseMockdata] = useState<FailedLoginArrayType>(mockData);
-
 
 
   const ExitPage = ()=>{
