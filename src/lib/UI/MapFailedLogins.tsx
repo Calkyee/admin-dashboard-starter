@@ -3,8 +3,11 @@ import React, {useEffect, useState} from 'react';
 import { FailedLogin, FailedLoginSchema} from '@/zod';
 import getFailedLogins from "@/lib/UI/ServerComponents/GetFailedLogins";
 
+interface Props {
+  useMockData: boolean;
+}
 
-const MapFailedLogins = ()=>{
+const MapFailedLogins = ({ useMockData }: Props)=>{
   const [data, setData] = useState<FailedLogin[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
