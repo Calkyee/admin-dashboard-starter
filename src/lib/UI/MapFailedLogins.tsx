@@ -38,9 +38,20 @@ const MapFailedLogins = ({ useMockData }: Props)=>{
   }, [])
   return (
     <>
-      <ul>{ !isLoading && data?.length !== 0 ? (data.map((f)=>(
-        <li key={f.id}>User: {f.userId}</li>
-      )) ) : ( <h2 className='font-bold'>No Failed Logins found!</h2> )
+      <ul className='flex flex-col gap-2'>{ !isLoading && data?.length !== 0 ? (data.map((f)=>(
+        <li key={f.id} className='
+          w-full h-fit min-h-4
+          bg-gray-400 text-white
+          p-2 rounded
+          hover:cursor-pointer hover:bg-gray-600
+          duration-100 ease-in-out transition-all'>
+          <div className='w-full h-full flex justify-between'>
+            <h2>UserId: {f.userId}</h2>
+
+            <h2 className='text-red-400 font-bold'>Failed Login Attempts: {f.loginAttempts}</h2>
+          </div>
+        </li>
+      )) ) : ( <h2 className='text-bold'>No Failed Logins found!</h2> )
       }</ul>
     </>
   )
