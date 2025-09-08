@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import AnimatePageSwapping from "@/lib/AnimatePageSwapping";
 import onClickProps from '@/lib/interfaces/onClickProps';
 
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const FailedAdminLogins =  ({setOnClick}: Props)=>{
+  const [useMockData, setUseMockdata] = useState(false);
 
   const ExitPage = ()=>{
     setOnClick({
@@ -20,16 +21,21 @@ const FailedAdminLogins =  ({setOnClick}: Props)=>{
 
   return (
       <AnimatePageSwapping>
-        <div>
+        <div className='w-full h-fit flex justify-between mb-2'>
           <button onClick={()=>ExitPage()}
             className='
             bg-black text-white
             px-2 py-1
             rounded
             cursor-pointer
-            mb-2
             '
           >Back to Adminsitrators page</button>
+          <button className='
+          bg-black text-white
+          px-2 py-1
+          rounded
+          cursor-pointer
+          ' onClick={()=>setUseMockdata(prev => !prev)}>Render Mock Data</button>
         </div>
         <div className='
           w-full h-full
