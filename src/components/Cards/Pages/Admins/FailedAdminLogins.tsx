@@ -42,7 +42,7 @@ const FailedAdminLogins =  ({setOnClick}: Props)=>{
           grid grid-cols-4 grid-rows-4
         '>
           <div className='row-span-2 col-span-1  p-2'>
-            <MapFailedLogins/>
+            <MapFailedLogins useMockData={useMockData}/>
           </div>
 
         </div>
