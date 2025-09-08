@@ -4,13 +4,42 @@ import onClickProps from '@/lib/interfaces/onClickProps';
 
 // Import Custom Cards
 import MapFailedLogins from '@/lib/UI/MapFailedLogins';
+import {z} from "zod";
+import {FailedLoginSchema} from "@/zod";
 
 interface Props {
   setOnClick: React.Dispatch<React.SetStateAction<onClickProps | null>>;
 }
 
+const FailedLoginArraySchema = z.array(FailedLoginSchema);
+type FailedLoginArrayType = z.infer<typeof FailedLoginArraySchema>;
+
+
 const FailedAdminLogins =  ({setOnClick}: Props)=>{
-  const [useMockData, setUseMockdata] = useState(false);
+  const mockData = [
+    {
+      id: "0", userId: "0", failedLogin: true, loginAttempts: 2
+    },
+    {
+      id: "1", userId: "1", failedLogin: true, loginAttempts: 1
+    },
+    {
+      id: "2", userId: "2", failedLogin: true, loginAttempts: 2
+    },
+    {
+      id: "3", userId: "3", failedLogin: true, loginAttempts: 2
+    },
+    {
+      id: "4", userId: "4", failedLogin: true, loginAttempts: 2
+    },
+    {
+      id: "5", userId: "5", failedLogin: true, loginAttempts: 2
+    }
+  ] as FailedLoginArrayType;
+
+  const [useMockData, setUseMockdata] = useState<FailedLoginArrayType>(mockData);
+
+
 
   const ExitPage = ()=>{
     setOnClick({
@@ -21,7 +50,7 @@ const FailedAdminLogins =  ({setOnClick}: Props)=>{
 
   return (
       <AnimatePageSwapping>
-        <div className='w-full h-fit flex justify-between mb-2'>
+        <div className='w-full h-fit mb-2'>
           <button onClick={()=>ExitPage()}
             className='
             bg-black text-white
@@ -30,12 +59,6 @@ const FailedAdminLogins =  ({setOnClick}: Props)=>{
             cursor-pointer
             '
           >Back to Adminsitrators page</button>
-          <button className='
-          bg-black text-white
-          px-2 py-1
-          rounded
-          cursor-pointer
-          ' onClick={()=>setUseMockdata(prev => !prev)}>Render Mock Data</button>
         </div>
         <div className='
           w-full h-full
