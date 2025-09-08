@@ -21,7 +21,7 @@ const MapFailedLogins = ({ useMockData }: Props)=>{
     setIsLoading(true);
     const fetchData = async()=>{
       try{
-        const recievedData: FailedLoginArrayType = await getFailedLogins();
+        const recievedData: FailedLoginArrayType = useMockData ? useMockData :  await getFailedLogins();
         const isValidated = FailedLoginArraySchema.safeParse(recievedData);
         if(!isValidated.success){
           console.error('[VALIDATION ERROR]: ', isValidated.error.flatten());
