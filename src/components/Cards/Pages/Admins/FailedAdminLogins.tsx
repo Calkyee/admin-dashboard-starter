@@ -67,7 +67,9 @@ const FailedAdminLogins =  ({setOnClick}: Props)=>{
           <div className='row-span-2 col-span-1  p-2'>
             <MapFailedLogins useMockData={useMockData}/>
           </div>
-
+          <div className='row-span-1 col-span-1 p-2'>
+            <PieChartForFailedAdminLogins useMockData={useMockData}/>
+          </div>
         </div>
       </AnimatePageSwapping>
     )
