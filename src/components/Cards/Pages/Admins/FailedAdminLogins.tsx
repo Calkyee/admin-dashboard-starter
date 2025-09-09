@@ -7,16 +7,18 @@ import MapFailedLogins from '@/lib/UI/MapFailedLogins';
 import {z} from "zod";
 import {FailedLoginSchema} from "@/zod";
 import PieChartForFailedAdminLogins from "@/lib/UI/PieChartForFailedAdminLogins";
+import Position from "@/lib/interfaces/PositionProps";
 
 interface Props {
   setOnClick: React.Dispatch<React.SetStateAction<onClickProps | null>>;
+  position: Position;
 }
 
 const FailedLoginArraySchema = z.array(FailedLoginSchema);
 type FailedLoginArrayType = z.infer<typeof FailedLoginArraySchema>;
 
 
-const FailedAdminLogins =  ({setOnClick}: Props)=>{
+const FailedAdminLogins =  ({setOnClick, position}: Props)=>{
   const mockData = [
     {
       id: "0", userId: "0", failedLogin: true, loginAttempts: 2
@@ -49,7 +51,7 @@ const FailedAdminLogins =  ({setOnClick}: Props)=>{
   }
 
   return (
-      <AnimatePageSwapping>
+      <AnimatePageSwapping position={position.position}>
         <div className='w-full h-fit mb-2'>
           <button onClick={()=>ExitPage()}
             className='

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import AnimatePageSwapping from '@/lib/AnimatePageSwapping'; 
 import onClickProps from '@/lib/interfaces/onClickProps';
-import { Session, SessionSchema } from "@/zod"; 
+import { Session, SessionSchema } from "@/zod";
+import Position from '@/lib/interfaces/PositionProps';
 
 interface Props {
   setOnClick: React.Dispatch<React.SetStateAction<onClickProps | null>>;
+  position: Position;
 }
 
-const LoggedInAdmins = ({ setOnClick }: Props) => {
+const LoggedInAdmins = ({ setOnClick, position }: Props) => {
   const [isLoading, setIsLoading] = useState(true);  
 
 
@@ -16,7 +18,7 @@ const LoggedInAdmins = ({ setOnClick }: Props) => {
   };
 
   return (
-    <AnimatePageSwapping>
+    <AnimatePageSwapping position={position.position}>
       <button
         className='bg-black w-2/12 text-white px-2 py-1 rounded cursor-pointer'
         onClick={ExitPage}
