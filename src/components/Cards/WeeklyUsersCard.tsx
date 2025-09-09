@@ -22,6 +22,7 @@ const WeeklyUsersCard = () => {
   const [error, setError] = useState<string | null>(null);  
   const [chartData, setChartData] = useState<dataPoint[] | null>(null); 
   const [last7DaysDate, setLast7DaysDate] = useState<string | null>(null);  
+  const [hovering, setHovering] = useState(false);
   useEffect(()=>{
     setIsLoading(true); 
     const getSessions = async()=>{ 
@@ -67,34 +68,51 @@ const WeeklyUsersCard = () => {
   const reversedData = [...chartData].reverse(); 
   return (
     <div className='
-      w-full h-full 
-      p-4 rounded 
-      border border-transparent hover:border-black 
-    '>
-      <h2 className="mb-2">Weekly Admin Logins for the past 7 days</h2>
-      {error && (<h2 className='text-red-500'>{error}</h2>)}
-      {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
-      {!isLoading && !error && chartData ? (
-        <ResponsiveContainer width="90%" aspect={2} height="90%">
-          <LineChart data={reversedData}>
-            <Line
-              type="stepAfter"
-              dataKey="number"
-              stroke="#2563eb"
-              strokeWidth={2}
-              dot={false}
-              isAnimationActive={false}
-            />
-            <Tooltip
-              labelFormatter={(label) => label === 0 ? `Date: Today` : `Date: ${label}`}
-              formatter={(value) => [`Logins: ${value}`, '']}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      ) : !isLoading && ( 
-        <h2 className='text-red-500'>No active sessions</h2>
+      w-full h-full
+      p-4 rounded
+      border border-transparent hover:border-black
+    ' onMouseEnter={()=>setHovering(true)} onMouseLeave={()=>setHovering(false)}
+    >
+      { isLoading && ( <div className='font-bold'>Loading...</div>)}
+      {!isLoading && chartData && !error ? (
+        <div className='w-full h-full pb-6 overflow-hidden'>
+          <div className='w-full h-fit relative'>
+            <h2 className='w-9/12 pb-2'>Weekly Administrator Logins for the past 7 days</h2>
+            { hovering && (
+              <button className='
+                absolute
+                right-0 top-0
+                bg-black text-white
+                px-2 py-1
+                rounded
+                cursor-pointer
+              '
+              >
+                View More
+              </button>
+            )}
+          </div>
+          <ResponsiveContainer height='80%' width='100%'>
+            <LineChart data={reversedData}>
+              <Line
+                type="stepAfter"
+                dataKey="number"
+                stroke="#2563eb"
+                strokeWidth={2}
+                dot={false}
+                isAnimationActive={false}
+              />
+              <Tooltip
+                labelFormatter={(label) => label === 0 ? `Date: Today` : `Date: ${label}`}
+                formatter={(value) => [`Logins: ${value}`, '']}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      ) : !chartData && (
+        <h2 className='font-bold text-red-500'>Error Loading Weekly Logins</h2>
       )}
-    
+
     </div>
   )
 }
