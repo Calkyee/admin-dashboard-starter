@@ -13,7 +13,7 @@ import TotalAdminsVsUsersCard from '@/components/Cards/TotalAdminsVsUsersCard';
 // Card Pages 
 import LoggedInAdmins from '@/components/Cards/Pages/Admins/LoggedInAdmins';
 import FailedAdminLogins from "@/components/Cards/Pages/Admins/FailedAdminLogins";
-import CurrentAdminsLoggedIn from "@/app/(auth)/(Pages)/(Cards)/Current-Admins-Logged-In";
+import CurrentAdminsPage from '@/components/Cards/Pages/Admins/CurrentAdminsPage';
 
 const Page = () => {
   const [onClick, setOnClick] = useState<onClickProps | null>(null); 
@@ -44,9 +44,9 @@ const Page = () => {
           <FailedAdminLogins setOnClick={setOnClick}/>
       )
   }
-  if(onClick?.Card === 'CurrentAdminsLoggedOut' && onClick.Active){
+  if(onClick?.Card === 'CurrentAdmins' && onClick.Active){
     return (
-      <CurrentAdminsLoggedIn setOnClick={setOnClick}/>
+      <CurrentAdminsPage/>
     )
   }
 
