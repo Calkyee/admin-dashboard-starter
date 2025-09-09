@@ -29,7 +29,7 @@ const CurrentAdminsLoggedInCard = ({setOnClick, onClick}: Props) => {
   const [isLoading, setIsloading] = useState<boolean>(true); 
   const [currentSessions, setCurrentSessions] = useState<number>(); 
   const [currentAdmins, setCurrentAdmins] = useState<UserType[] | null>(null); 
-  const [hover, setHover] = useState(false); 
+  const [hovering, setHovering] = useState(false);
   
   const [error, setError] = useState<string>(""); 
   useEffect(()=>{  
@@ -88,54 +88,54 @@ const CurrentAdminsLoggedInCard = ({setOnClick, onClick}: Props) => {
   return (
     <div className='
     w-full h-full
-    p-4 rounded 
-    border border-transparent hover:border-black 
-    ' 
-      onMouseEnter={()=>setHover(true)}
-      onMouseLeave={()=>setHover(false)}
-    > 
-      <div className='w-full h-fit relative'>
-      <h2>Current Admins logged in <span className=' 
-        font-bold 
-        text-center 
-        '> {currentSessions}</span></h2>
-      {hover && !isLoading && ( 
-        <button className='
-        absolute 
-        right-0 top-0 
-        bg-black text-white 
-        px-2 py-1 
-        rounded 
-        cursor-pointer'
-        onClick={()=>setOnClick({Card: 'CurrentsLoggedIn', Active: true})}
-        >View More</button>
-      )}  
-      </div>
-      {error && (<h2 className='text-red-500'>{error}</h2>)}
-      {isLoading && (<h2 className='text-red-500'>Loading...</h2>)}
-      {!isLoading && currentSessions !== 0 && ( 
-        <div className='w-full h-full '>
-          {/* Chart for rendering data here */}
-          <ResponsiveContainer width="100%" height="100%">
+    p-4 rounded
+    border border-transparent hover:border-black
+    ' onMouseEnter={()=>setHovering(true)} onMouseLeave={()=>setHovering(false)}>
+      {isLoading && ( <div className='font-bold'>Loading...</div>)}
+      {!isLoading && currentAdmins && !error ? (
+        <div className='w-full h-full pb-4 overflow-hidden'>
+          <div className='w-full h-fit relative '>
+            <h2 className='w-8/12'>Current Admins Logged in: <span className='font-bold'>{currentSessions}</span></h2>
+            { hovering && (
+              <button className='
+                absolute
+                right-0 top-0
+                bg-black text-white
+                px-2 py-1
+                rounded
+                cursor-pointer
+              '
+                onClick={()=> setOnClick({Card: 'CurrentsLoggedIn', Active: true })}
+              >
+                View more
+              </button>
+            )}
+          </div>
+          <ResponsiveContainer height='100%' width='100%' >
             <PieChart>
               <Pie
-              data={chartData}
-              dataKey="value"
-              nameKey="name"
-              outerRadius={65}
-              innerRadius={35}
-              label
+                data={chartData}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={65}
+                innerRadius={35}
+                label
               >
-              { chartData.map((entry, idx)=>( 
-              <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]}/>
-            )) }  
-            </Pie>
-          <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>        
-      </div>
-      )
-      }
+                { chartData.map((entry, idx)=>(
+                  <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]}/>
+                )) }
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      ) : !isLoading && (
+        <h2 className='text-red-500'>
+          Error Loading Logged In Admins
+        </h2>
+      )}
+
+
     </div>
   )
 }
