@@ -15,8 +15,13 @@ import LoggedInAdmins from '@/components/Cards/Pages/Admins/LoggedInAdmins';
 import FailedAdminLogins from "@/components/Cards/Pages/Admins/FailedAdminLogins";
 import CurrentAdminsPage from '@/components/Cards/Pages/Admins/CurrentAdminsPage';
 
+import Position from '@/lib/interfaces/PositionProps';
+
 const Page = () => {
-  const [onClick, setOnClick] = useState<onClickProps | null>(null); 
+  const [onClick, setOnClick] = useState<onClickProps | null>(null);
+  const [position, setPosition] = useState<Position>({
+    Card: undefined, position: ''
+  });
   const topCardsCss = ` 
   col-span-1 row-span-1
   rounded 
@@ -36,32 +41,42 @@ const Page = () => {
   `
   if(onClick?.Card === 'CurrentsLoggedIn' && onClick.Active){ 
     return ( 
-      <LoggedInAdmins setOnClick={setOnClick}/>
+      <LoggedInAdmins setOnClick={setOnClick} position={position}/>
     )
   }
   if(onClick?.Card === 'FailedAdminsLogin' && onClick.Active){
       return (
-          <FailedAdminLogins setOnClick={setOnClick}/>
+          <FailedAdminLogins setOnClick={setOnClick} position={position}/>
       )
   }
   if(onClick?.Card === 'CurrentAdmins' && onClick.Active){
     return (
-      <CurrentAdminsPage setOnClick={setOnClick}/>
+      <CurrentAdminsPage setOnClick={setOnClick} position={position}/>
     )
   }
 
   return (
     <>
-    <div className={topCardsCss}>
-      <CurrentAdminsCard setOnClick={setOnClick}/>
+    <div className={topCardsCss} onClick={()=> setPosition({
+      Card: "CurrentAdmins",
+      position: "col-start-1 row-start-1",
+    })}>
+      <CurrentAdminsCard setOnClick={setOnClick}
+      />
     </div>
-    <div className={topCardsCss}>
+    <div className={topCardsCss} onClick={()=>setPosition({
+      Card: "CurrentAdminsLoggedIn",
+      position: "col-start-2 row-start-1",
+    })}>
      <CurrentAdminsLoggedInCard setOnClick={setOnClick}/>
     </div>
     <div className={topCardsCss}>
       <WeeklyUsersCard />
     </div>
-    <div className={topCardsCss}>
+    <div className={topCardsCss} onClick={()=>setPosition({
+      Card: "FailedAdminLogins",
+      position: "col-start-4 row-start-1",
+    })}>
       <FailedAdminCard setOnClick={setOnClick}/>
     </div>
     <div className={leftCardsCss}>Card 5</div>
