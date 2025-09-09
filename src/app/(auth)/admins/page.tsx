@@ -46,7 +46,7 @@ const Page = () => {
   }
   if(onClick?.Card === 'CurrentAdmins' && onClick.Active){
     return (
-      <CurrentAdminsPage/>
+      <CurrentAdminsPage setOnClick={setOnClick}/>
     )
   }
 
