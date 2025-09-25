@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
+
+import NavigationBar from '@/components/ui/navigationBar/NavigationBar'
+import Buttons from '@/components/ui/navigationBar/Buttons/Buttons'
+
+
 import "./globals.css";
 
 const inter = Inter({ 
@@ -28,6 +33,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${geistMono.variable} antialiased`}
       >
+        <div>
+          <NavigationBar Buttons={Buttons}/>
+        </div>
         {children}
       </body>
     </html>
