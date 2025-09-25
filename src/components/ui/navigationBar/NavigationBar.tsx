@@ -1,6 +1,6 @@
 'use client'; 
 import React from 'react'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import buttonInterface from '@/lib/interfaces/buttonInterface'
 
@@ -20,14 +20,18 @@ const NavigationBar = ({Buttons}: NavigationBarProps) => {
   return (
     <nav>
       { 
-        Buttons.map((button, idx)=>(
-          <button
-          key={idx}
-          onClick={()=>handleOnClick(button.Link)}
-          >
-            {button.buttonTitle}
-          </button>
-        ))
+        Buttons.map((button, idx)=>{
+          console.log('[CLIENT/RENDERED BUTTON]: ', button);
+          return(          
+            <button
+            className='text-black'
+            key={idx}
+            onClick={()=>handleOnClick(button.Link)}
+            >
+              {button.buttonTitle}
+            </button>
+          )
+        })
       }
     </nav>
   )
