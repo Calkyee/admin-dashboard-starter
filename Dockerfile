@@ -1,17 +1,15 @@
-# Base stage
-FROM node:23.6.1-alpine AS base
-WORKDIR /app
-COPY package.json ./
-RUN npm install
-COPY . .
+FROM node:23.6.1-alpine AS base 
 
-# Development stage
-FROM base AS dev
-EXPOSE 3000
+WORKDIR /app 
+
+COPY package*.json ./  
+
+FROM base AS dev 
+
+RUN npm install 
+
+EXPOSE 3000 
+
+COPY . . 
+
 CMD ["npm", "run", "dev"]
-
-# Production stage
-FROM base AS prod
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "start"]

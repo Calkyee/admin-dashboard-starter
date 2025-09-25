@@ -2,21 +2,32 @@ services:
   web-dev: 
     build: 
       context: . 
-      target: dev
+      dockerfile: Dockerfile 
+      target: dev 
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app 
-      - /app/node_modules 
     environment:
       - NODE_ENV=development 
-    command: npm run dev 
-  web-prod: 
-    build: 
-      context: . 
-      target: prod
-    ports:
-      - "4000:3000"
-    environment: 
-      - NODE_ENV=production 
-    command: npm start
+    volumes:
+      - /app/node_modules 
+    develop:
+      watch:
+        - action: sync 
+          path: ./src
+          target: /app/src
+        
+        - action: rebuild 
+          path: ./public 
+          target: /app/public
+           
+        - action: sync 
+          path: ./prisma
+          target: /app/prisma 
+
+        - action: rebuild 
+          path: package.json 
+
+          ignore: 
+            - node_modules/
+
+          
