@@ -9,9 +9,7 @@ interface NavigationBarProps {
   Buttons: buttonInterface[]
 }
 
-interface handleOnClickNavProps { 
-  Link: String; 
-}
+
 
 const NavigationBar = ({Buttons}: NavigationBarProps) => {
   const router = useRouter(); 
