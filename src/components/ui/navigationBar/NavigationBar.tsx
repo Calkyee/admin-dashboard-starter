@@ -21,7 +21,6 @@ const NavigationBar = ({Buttons}: NavigationBarProps) => {
     <nav>
       { 
         Buttons.map((button, idx)=>{
-          console.log('[CLIENT/RENDERED BUTTON]: ', button);
           return(          
             <button
             className='text-black'
