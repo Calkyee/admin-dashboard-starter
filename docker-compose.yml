@@ -9,5 +9,25 @@ services:
     environment:
       - NODE_ENV=development 
     volumes:
-      - .:/app 
-      - /app/node_modules
+      - /app/node_modules 
+    develop:
+      watch:
+        - action: sync 
+          path: ./src
+          target: /app/src
+        
+        - action: rebuild 
+          path: ./public 
+          target: /app/public
+           
+        - action: sync 
+          path: ./prisma
+          target: /app/prisma 
+
+        - action: rebuild 
+          path: package.json 
+
+          ignore: 
+            - node_modules/
+
+          
