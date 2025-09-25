@@ -1,11 +1,10 @@
 import React from 'react'
 
-
 interface props { 
   children: React.ReactNode
 }
 
-const layout = ({children}: props) => {
+const MainAppLayout = ({children}: props) => {
   return (
     <>
       {children}
@@ -13,4 +12,4 @@ const layout = ({children}: props) => {
   )
 }
 
-export default layout
+export default MainAppLayout; 
