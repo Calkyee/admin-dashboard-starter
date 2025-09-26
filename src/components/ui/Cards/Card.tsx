@@ -1,10 +1,19 @@
 import React from 'react'
 
-const Card = () => {
-  return (
-    <div>
+interface CardProps { 
+  CardCol: number; 
+  CardRow: number; 
+}
 
-      
+const Card = ({CardCol, CardRow}: CardProps) => {
+  return (
+    <div className={`
+      bg-white shadow rounded
+      col-span-${CardCol}
+      row-span-${CardRow}
+    `}>
+
+
     </div>
   )
 }
