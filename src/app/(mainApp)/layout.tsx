@@ -4,12 +4,17 @@ interface props {
   children: React.ReactNode
 }
 
-const MainAppLayout = ({children}: props) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div className='
+      h-full w-full
+      
+    '>
       {children}
-    </>
+    </div>
+      
+    
   )
 }
 
-export default MainAppLayout; 
+
