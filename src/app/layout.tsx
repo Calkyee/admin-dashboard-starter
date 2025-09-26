@@ -3,6 +3,7 @@ import { Inter, Geist_Mono } from "next/font/google";
 
 import NavigationBar from '@/components/ui/navigationBar/NavigationBar'
 import Buttons from '@/components/ui/navigationBar/Buttons/Buttons'
+import LogoutButton from "@/components/ui/navigationBar/Buttons/LogoutButton";
 
 
 import "./globals.css";
@@ -43,7 +44,7 @@ export default function RootLayout({
 
           flex flex-col 
           items-center 
-          justify-start
+          justify-between
         ">
           <div className="flex flex-col items-center">
             <h2 className="
@@ -58,7 +59,7 @@ export default function RootLayout({
             </h3>
           </div>
           <NavigationBar Buttons={Buttons}/>
-       
+          <LogoutButton />  
         </div>
         {children}
       </body>
