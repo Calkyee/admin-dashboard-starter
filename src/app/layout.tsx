@@ -32,9 +32,36 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${inter.variable} ${geistMono.variable} antialiased`}
-      >
-        <div>
-          <NavigationBar Buttons={Buttons}/>
+      > 
+        <div className="
+          min-h-screen 
+          w-2/12
+
+          p-2
+          bg-white
+
+          flex flex-col 
+          items-center 
+          justify-start
+        ">
+          <div className="flex flex-col items-center gap-[1.5rem]">
+            <h2 className="
+              text-[1.5rem]
+              font-bold 
+            ">Admin Dashboard</h2>
+            <h3 className="
+              text-[1.25rem]
+              font-semibold
+            ">
+              app_name
+            </h3>
+          </div>
+          <div>
+            <NavigationBar Buttons={Buttons}/>
+          </div>
+          <div>
+            {/* Logout Button And other buttons here */}
+          </div>
         </div>
         {children}
       </body>
