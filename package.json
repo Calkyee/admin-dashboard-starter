@@ -14,7 +14,8 @@
     "next": "15.5.3",
     "next-auth": "^4.24.11",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -26,6 +27,7 @@
     "eslint-config-next": "15.5.3",
     "prisma": "^6.16.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "zod-prisma-types": "^3.2.4"
   }
 }

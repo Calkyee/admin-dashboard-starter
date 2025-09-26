@@ -8,6 +8,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator zod { 
+  provider = "zod-prisma-types"
+  output = "../src/zod" // Custom src/zod output folder 
+}
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
