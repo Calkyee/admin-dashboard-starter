@@ -35,33 +35,52 @@ export default function RootLayout({
         className={`${inter.variable} ${geistMono.variable} antialiased`}
       > 
         <div className="
-          min-h-screen 
-          w-2/12
-
-          gap-[1.5rem]
-          p-2
-          bg-white
-
-          flex flex-col 
-          items-center 
-          justify-between
+          flex flex-row
         ">
-          <div className="flex flex-col items-center">
-            <h2 className="
-              text-[1.5rem]
-              font-bold 
-            ">Admin Dashboard</h2>
-            <h3 className="
-              text-[1.25rem]
-              font-semibold
+          {/* Navigation Bar */}
+          <div className="
+            w-2/12
+            min-h-screen 
+            bg-white
+            
+            flex flex-col gap-8 justify-around
+          ">
+            {/* Heading */}
+            <div className="
+              min-w-full h-fit flex flex-col items-center
+              p-2
             ">
-              app_name
-            </h3>
+              <h2 className="
+              font-bold 
+              text-[1.5rem]
+              ">Admin Dashboard</h2>
+              <h3 className="
+                font-semibold
+                text-[1.25rem]
+              ">app_name</h3>
+            </div>
+            {/* Buttons */}
+            <NavigationBar Buttons={Buttons}/>
+            <div className="
+              min-w-full h-fit 
+              flex justify-center
+              mb-5
+            ">
+              <LogoutButton />
+            </div>
           </div>
-          <NavigationBar Buttons={Buttons}/>
-          <LogoutButton />  
+          {/* App */}
+          <div className="
+            p-2
+            px-4
+            flex-1 
+            h-screen
+          ">
+            {
+              children
+            }
+          </div>
         </div>
-        {children}
       </body>
     </html>
   );
