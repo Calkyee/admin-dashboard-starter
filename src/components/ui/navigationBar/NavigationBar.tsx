@@ -18,16 +18,12 @@ const NavigationBar = ({Buttons}: NavigationBarProps) => {
   }
   
   return (
-    <nav className='
-      w-2/12
-      h-12/12 
+    <nav className=' 
+      flex-1 
+      w-full 
 
-    bg-white 
-      p-2  
-
-      flex flex-col gap-[1.5625rem]
-      justify-start
-      items-center
+      flex flex-col 
+      justify-start items-center gap-[1.25rem]
     '>
       { 
         Buttons.map((button, idx)=>{
