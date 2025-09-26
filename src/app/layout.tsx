@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
+
+import NavigationBar from '@/components/ui/navigationBar/NavigationBar'
+import Buttons from '@/components/ui/navigationBar/Buttons/Buttons'
+import LogoutButton from "@/components/ui/navigationBar/Buttons/LogoutButton";
+
+
 import "./globals.css";
 
 const inter = Inter({ 
@@ -27,7 +33,34 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${inter.variable} ${geistMono.variable} antialiased`}
-      >
+      > 
+        <div className="
+          min-h-screen 
+          w-2/12
+
+          gap-[1.5rem]
+          p-2
+          bg-white
+
+          flex flex-col 
+          items-center 
+          justify-between
+        ">
+          <div className="flex flex-col items-center">
+            <h2 className="
+              text-[1.5rem]
+              font-bold 
+            ">Admin Dashboard</h2>
+            <h3 className="
+              text-[1.25rem]
+              font-semibold
+            ">
+              app_name
+            </h3>
+          </div>
+          <NavigationBar Buttons={Buttons}/>
+          <LogoutButton />  
+        </div>
         {children}
       </body>
     </html>
