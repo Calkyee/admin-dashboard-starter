@@ -37,6 +37,7 @@ export default function RootLayout({
           min-h-screen 
           w-2/12
 
+          gap-[1.5rem]
           p-2
           bg-white
 
@@ -44,7 +45,7 @@ export default function RootLayout({
           items-center 
           justify-start
         ">
-          <div className="flex flex-col items-center gap-[1.5rem]">
+          <div className="flex flex-col items-center">
             <h2 className="
               text-[1.5rem]
               font-bold 
@@ -56,12 +57,8 @@ export default function RootLayout({
               app_name
             </h3>
           </div>
-          <div>
-            <NavigationBar Buttons={Buttons}/>
-          </div>
-          <div>
-            {/* Logout Button And other buttons here */}
-          </div>
+          <NavigationBar Buttons={Buttons}/>
+       
         </div>
         {children}
       </body>
