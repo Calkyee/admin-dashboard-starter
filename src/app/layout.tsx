@@ -72,6 +72,7 @@ export default function RootLayout({
           {/* App */}
           <div className="
             p-2
+            px-4
             flex-1 
             h-screen
           ">
