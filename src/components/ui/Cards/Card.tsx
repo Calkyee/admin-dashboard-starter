@@ -7,11 +7,13 @@ interface CardProps {
 }
 
 const Card = ({CardCol, CardRow, children}: CardProps) => {
+  const colSpan = `col-span-${CardCol}`
+  const rowSpan = `row-span-${CardRow}`
+
   return (
     <div className={`
       bg-white shadow rounded
-      col-span-${CardCol}
-      row-span-${CardRow}
+      ${colSpan} ${rowSpan}
     `}>
       {
         children
@@ -20,4 +22,4 @@ const Card = ({CardCol, CardRow, children}: CardProps) => {
   )
 }
 
-export default Card
+export default Card 
