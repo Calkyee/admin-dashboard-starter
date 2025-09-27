@@ -13,6 +13,10 @@ services:
     develop:
       watch:
         - action: sync 
+          path: . 
+          target: /app 
+
+        - action: sync 
           path: ./src
           target: /app/src
         
@@ -25,7 +29,10 @@ services:
           target: /app/prisma 
 
         - action: rebuild 
-          path: package.json 
+          path: package.json
+
+        - action: rebuild 
+          path: tsconfig.json 
 
           ignore: 
             - node_modules/
