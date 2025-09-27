@@ -3,6 +3,7 @@ import BarGraph from "@/components/ui/Charts/BarGraph";
 import LineGraph from "@/components/ui/Charts/LineGraph";
 import StepGraph from "@/components/ui/Charts/StepGraph";
 import PieChart from "@/components/ui/Charts/PieGraph"; 
+import SideBarGraph from "@/components/ui/Charts/SideBarGraph";
 
 export default function Home() {
   return (
@@ -18,6 +19,15 @@ export default function Home() {
       </Card>
       <Card CardCol={1} CardRow={1}>
         <PieChart useMockData={true}/>
+      </Card>
+      <Card CardCol={2} CardRow={1}>
+        <div className="
+          w-full h-full flex flex-col 
+          justify-end
+        ">
+          <SideBarGraph useMockData={true}/>
+          <SideBarGraph useMockData={true}/>
+        </div>
       </Card>
     </>
   );
