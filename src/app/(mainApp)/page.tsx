@@ -33,6 +33,9 @@ export default function Home() {
       <Card CardCol={2} CardRow={2}>
         <CreateReadUpdateDeleteChart useMockData={true}/>
       </Card>
+      <Card CardCol={2} CardRow={1}>
+
+      </Card>
     </>
   );
 }
