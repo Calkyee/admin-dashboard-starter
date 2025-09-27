@@ -20,11 +20,12 @@ const LineGraph = ({useMockData, dataSource}: LineGraphProps)=>{
   useEffect(()=>{ 
     setIsLoading(true); 
     if(useMockData){ 
-      setChartData(MockUsers); 
+      setChartData(MockUsers);
+      setIsLoading(false);  
       return; 
     }
     // Implement Live data source later 
-  }, []); 
+  }, [useMockData, dataSource]); 
 
   return ( 
     <div className='
@@ -36,7 +37,7 @@ const LineGraph = ({useMockData, dataSource}: LineGraphProps)=>{
         <ResponsiveContainer>
           <LineChart data={chartData}>
             <Tooltip />
-            <Line dataKey="users" strokeWidth={2} stroke='black'/>
+            <Line dataKey="users" strokeWidth={2} stroke='black' type='monotone' dot={false}/>
           </LineChart>
         </ResponsiveContainer>
       )}
