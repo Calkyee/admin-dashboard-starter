@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Card CardCol={1} CardRow={1}>
-        <BarGraph />
+        <BarGraph useMockData={true}/>
       </Card>      
       <Card CardCol={1} CardRow={1}>
         
