@@ -4,6 +4,7 @@ import LineGraph from "@/components/ui/Charts/LineGraph";
 import StepGraph from "@/components/ui/Charts/StepGraph";
 import PieChart from "@/components/ui/Charts/PieGraph"; 
 import SideBarGraph from "@/components/ui/Charts/SideBarGraph";
+import CreateReadUpdateDeleteChart from "@/components/ui/Charts/CreateReadUpdateDeleteChart";
 
 export default function Home() {
   return (
@@ -28,6 +29,9 @@ export default function Home() {
           <SideBarGraph useMockData={true}/>
           <SideBarGraph useMockData={true}/>
         </div>
+      </Card>
+      <Card CardCol={2} CardRow={2}>
+        <CreateReadUpdateDeleteChart useMockData={true}/>
       </Card>
     </>
   );
