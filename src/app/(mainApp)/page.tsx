@@ -6,17 +6,16 @@ export default function Home() {
     <>
       <Card CardCol={1} CardRow={1}>
         <BarGraph />
+      </Card>      
+      <Card CardCol={1} CardRow={1}>
+        
       </Card>
       <Card CardCol={1} CardRow={1}>
-
-      </Card>
-      <Card CardCol={1} CardRow={1}>
-
-      </Card>
-      <Card CardCol={1} CardRow={1}>
-
-      </Card>
       
+      </Card>
+      <Card CardCol={1} CardRow={1}>
+      
+      </Card>
     </>
   );
 }
