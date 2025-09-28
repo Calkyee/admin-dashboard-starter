@@ -4,6 +4,7 @@ import StepGraph from "@/components/ui/Charts/StepGraph";
 import PieChart from "@/components/ui/Charts/PieGraph"; 
 import SideBarGraph from "@/components/ui/Charts/SideBarGraph";
 import CreateReadUpdateDeleteChart from "@/components/ui/Charts/CreateReadUpdateDeleteChart";
+import HeatMapChart from '@/components/ui/Charts/HeatMapChart'; 
 
 interface DashBoardConfigProps { 
   CardCol: number; 
@@ -17,7 +18,8 @@ const DashBoardConfig: DashBoardConfigProps[] = [
   {CardCol: 1, CardRow: 1, Component: <StepGraph useMockData={true}/>}, 
   {CardCol: 1, CardRow: 1, Component: <PieChart useMockData={true}/>}, 
   {CardCol: 2, CardRow: 1, Component: ( <><SideBarGraph useMockData={true}/> <SideBarGraph useMockData={true}/></>)}, 
-  {CardCol: 2, CardRow: 2, Component: <CreateReadUpdateDeleteChart useMockData={true}/>}
+  {CardCol: 2, CardRow: 2, Component: <CreateReadUpdateDeleteChart useMockData={true}/>}, 
+  {CardCol: 2, CardRow: 1, Component: <HeatMapChart />}
 ]
 
 
