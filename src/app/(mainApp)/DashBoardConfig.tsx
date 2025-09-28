@@ -19,7 +19,9 @@ const DashBoardConfig: DashBoardConfigProps[] = [
   {CardCol: 1, CardRow: 1, Component: <PieChart useMockData={true}/>}, 
   {CardCol: 2, CardRow: 1, Component: ( <><SideBarGraph useMockData={true}/> <SideBarGraph useMockData={true}/></>)}, 
   {CardCol: 2, CardRow: 2, Component: <CreateReadUpdateDeleteChart useMockData={true}/>}, 
-  {CardCol: 2, CardRow: 1, Component: <HeatMapChart />}
+  {CardCol: 2, CardRow: 1, Component: <HeatMapChart />}, 
+  {CardCol: 2, CardRow: 1, Component: <div></div> },
+  {CardCol: 2, CardRow: 1, Component: <div></div> }
 ]
 
 
