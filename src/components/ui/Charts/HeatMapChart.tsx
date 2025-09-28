@@ -11,10 +11,6 @@ interface HeatMapProps {
   dataSource?: string; 
 }
 
-interface HeatMapConfigProps {  
-  useMockData?: boolean; 
-  dataSource?: string;  
-}
 
 const Cell = ({active}: CellProps)=>{ 
   return ( 
