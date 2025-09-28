@@ -8,7 +8,7 @@ export default function Home() {
     <>
       { DashBoardConfig.map((config, idx)=>( 
         <Card key={idx} CardCol={config.CardCol} CardRow={config.CardRow}>
-          {config.Component}
+            {config.Component}
         </Card>
       ))
       }
