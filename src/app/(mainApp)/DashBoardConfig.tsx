@@ -1,10 +1,11 @@
-import BarGraph from "@/components/ui/Charts/BarGraph";
-import LineGraph from "@/components/ui/Charts/LineGraph";
-import StepGraph from "@/components/ui/Charts/StepGraph";
-import PieChart from "@/components/ui/Charts/PieGraph"; 
-import SideBarGraph from "@/components/ui/Charts/SideBarGraph";
+import SideBarGraphCard from "@/components/ui/Cards/SideBarGraphCard";
+import HeatMapCard from "@/components/ui/Cards/HeatMapCard"; 
+import BarGraphCard from "@/components/ui/Cards/BarGraphCard"; 
+import LineGraphCard from "@/components/ui/Cards/LineGraphCard";
+import StepGraphCard from "@/components/ui/Cards/StepGraphCard";
+import PieChartCard from  '@/components/ui/Cards/PieChartCard'; 
+ 
 import CreateReadUpdateDeleteChart from "@/components/ui/Charts/CreateReadUpdateDeleteChart";
-import HeatMapChart from '@/components/ui/Charts/HeatMapChart'; 
 
 interface DashBoardConfigProps { 
   CardCol: number; 
@@ -13,13 +14,13 @@ interface DashBoardConfigProps {
 }
 
 const DashBoardConfig: DashBoardConfigProps[] = [ 
-  {CardCol: 1, CardRow: 1, Component: <BarGraph useMockData={true}/>}, 
-  {CardCol: 1, CardRow: 1, Component: <LineGraph useMockData={true}/>}, 
-  {CardCol: 1, CardRow: 1, Component: <StepGraph useMockData={true}/>}, 
-  {CardCol: 1, CardRow: 1, Component: <PieChart useMockData={true}/>}, 
-  {CardCol: 2, CardRow: 1, Component: ( <><SideBarGraph useMockData={true}/> <SideBarGraph useMockData={true}/></>)}, 
+  {CardCol: 1, CardRow: 1, Component: <BarGraphCard useMockData={true}/>}, 
+  {CardCol: 1, CardRow: 1, Component: <LineGraphCard useMockData={true}/>}, 
+  {CardCol: 1, CardRow: 1, Component: <StepGraphCard useMockData={true}/>}, 
+  {CardCol: 1, CardRow: 1, Component: <PieChartCard useMockData={true}/>}, 
+  {CardCol: 2, CardRow: 1, Component: <SideBarGraphCard useMockData={true} />}, 
   {CardCol: 2, CardRow: 2, Component: <CreateReadUpdateDeleteChart useMockData={true}/>}, 
-  {CardCol: 2, CardRow: 1, Component: <HeatMapChart />}, 
+  {CardCol: 2, CardRow: 1, Component: <HeatMapCard useMockData={true}/>}, 
   {CardCol: 2, CardRow: 1, Component: <div></div> },
   {CardCol: 2, CardRow: 1, Component: <div></div> }
 ]
