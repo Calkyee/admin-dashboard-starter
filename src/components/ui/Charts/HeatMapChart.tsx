@@ -23,14 +23,16 @@ const Cell = ({active}: CellProps)=>{
 }
 
 const useHeatMapConfig = ({dataSource, useMockData}: HeatMapProps)=>{ 
+  let HeatMapConfig; 
   if(useMockData){ 
-    const HeatMapConfig = SessionCountFor8Days.map((session, idx) => ({
+    HeatMapConfig = SessionCountFor8Days.map((session, idx) => ({
       id: idx,
       Cell: <Cell active={session.active_sessions === 0 ? false : true} />
     }));
     return HeatMapConfig;
   }
   // Fetch and Return Live data
+
 }
 
 
