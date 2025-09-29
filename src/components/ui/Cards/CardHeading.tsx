@@ -1,36 +1,12 @@
 'use client'; 
 import React, {useState} from 'react'
-import { useRouter } from 'next/navigation'; 
+import ReturnButton from '@/components/Pages/Components/ReturnButton';
 
 interface CardHeadingProps { 
   children: React.ReactNode; 
   DetailPageUrl: string; 
 }
 
-interface ViewMoreButtonProps { 
-  setIsViewMoreActive: React.Dispatch<React.SetStateAction<boolean>>; 
-  isViewMoreActive: boolean; 
-  DetailPageUrl: string; 
-}
-
-const ViewMoreButton = ({setIsViewMoreActive, isViewMoreActive, DetailPageUrl}: ViewMoreButtonProps)=>{ 
-  const router = useRouter(); 
-
-  const handleClick = ()=>{ 
-    setIsViewMoreActive(prev => !prev);
-    router.push(DetailPageUrl);  
-  }
-  
-  return ( 
-    <button className='
-      w-6/6 h-fit px-1 py-2
-    bg-black  font-semibold
-      rounded
-    ' onClick={()=>handleClick}>
-      <h2 className='text-white'>VIEW MORE</h2>
-    </button>
-  )
-}
 
 const CardHeading = ({children, DetailPageUrl}: CardHeadingProps) => {
   const [isViewMoreActive, setIsViewMoreActive] = useState(false); 
@@ -46,7 +22,9 @@ const CardHeading = ({children, DetailPageUrl}: CardHeadingProps) => {
         {children}
       </div>
       <div className=''>
-        <ViewMoreButton setIsViewMoreActive={setIsViewMoreActive} isViewMoreActive={isViewMoreActive} DetailPageUrl={DetailPageUrl}/>
+        <ReturnButton defaultLink={DetailPageUrl} relativeWidth={true}>
+          VIEW MORE
+        </ReturnButton>
       </div>
     </div>
   )
