@@ -1,22 +1,17 @@
-
+'use client'; 
 import Card from "@/components/ui/Cards/Card"; 
+import DashBoardConfig from "@/app/(mainApp)/DashBoardConfig";
+
 
 export default function Home() {
   return (
     <>
-      <Card CardCol={1} CardRow={1}>
-
-      </Card>
-      <Card CardCol={1} CardRow={1}>
-
-      </Card>
-      <Card CardCol={1} CardRow={1}>
-
-      </Card>
-      <Card CardCol={1} CardRow={1}>
-
-      </Card>
-      
+      { DashBoardConfig.map((config, idx)=>( 
+        <Card key={idx} CardCol={config.CardCol} CardRow={config.CardRow}>
+            {config.Component}
+        </Card>
+      ))
+      }
     </>
   );
 }
