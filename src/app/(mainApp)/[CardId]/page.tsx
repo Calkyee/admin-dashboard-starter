@@ -1,8 +1,12 @@
 import React from 'react'
+import Title from '@/components/Pages/Components/Title';
 
 const page = () => {
   return (
-    <div>ExpandedCard</div>
+    <div>
+      <Title>TITLE</Title>
+
+    </div>
   )
 }
 
