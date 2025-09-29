@@ -53,7 +53,7 @@ const HeatMapChart = ({useMockData, dataSource}: HeatMapProps) => {
   return (
     <div className='
       p-4
-      w-4/12 h-12/12
+      w-3/12 h-12/12
       grid grid-cols-8 grid-rows-8 gap-1  
     '>
       <HeatMap />
