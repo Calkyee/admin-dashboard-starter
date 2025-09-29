@@ -30,7 +30,7 @@ const PieGraph = ({ useMockData, dataSource }: PieGraphProps) => {
 
   return (
     <div className='
-      w-full h-full p-2 
+      w-full h-full p-2
     '>
       {isLoading ? (
         <h2>Loading...</h2>
@@ -38,7 +38,7 @@ const PieGraph = ({ useMockData, dataSource }: PieGraphProps) => {
         <ResponsiveContainer>
           <PieChart data={chartData}>
             <Tooltip />
-            <Pie dataKey="users" nameKey="name" cx="50%" cy="50%" innerRadius={40} outerRadius={80} fill='#82ca9d'/>
+            <Pie dataKey="users" nameKey="name" cx="50%" cy="50%" innerRadius={40} outerRadius={70} fill='#82ca9d'/>
           </PieChart>
         </ResponsiveContainer>
       )}

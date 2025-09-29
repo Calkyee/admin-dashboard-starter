@@ -1,12 +1,16 @@
 import React from 'react'
+import CardHeading from "@/components/ui/Cards/CardHeading"; 
+
 
 interface CardProps { 
   CardCol: number; 
   CardRow: number; 
   children?: React.ReactNode; 
+  Title: string; 
+  DetailPageUrl?: string; 
 }
 
-const Card = ({CardCol, CardRow, children}: CardProps) => {
+const Card = ({CardCol, CardRow, children, Title, DetailPageUrl}: CardProps) => {
   const colSpan: Record<number, string> = { 
     1: 'col-span-1',
     2: 'col-span-2',
@@ -23,11 +27,24 @@ const Card = ({CardCol, CardRow, children}: CardProps) => {
   return (
     <div className={`
       bg-white shadow rounded
+      flex flex-col 
       ${colSpan[CardCol]} ${rowSpan[CardRow]}
     `}>
       {
-        children
+        DetailPageUrl && ( 
+        <CardHeading DetailPageUrl={DetailPageUrl}>
+          {Title}
+        </CardHeading>
+        )        
       }
+      <div className={`
+        w-full h-full 
+          
+      `}>
+        {
+          children
+        }
+      </div>
     </div>
   )
 }
