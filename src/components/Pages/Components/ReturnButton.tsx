@@ -21,7 +21,7 @@ const ReturnButton = ({children,  defaultLink, relativeWidth}: ReturnButtonProps
       className={`
         bg-black text-white font-bold rounded
         px-2 py-1 
-        ${relativeWidth ? 'w-1/12' : 'w-24'} 
+        ${relativeWidth ? 'w-fit' : 'w-24'} 
         h-fit font-semibold
       `}
     >
