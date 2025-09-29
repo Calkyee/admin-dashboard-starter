@@ -2,11 +2,6 @@
 import Card from "@/components/ui/Cards/Card"; 
 import DashBoardConfig from "@/app/(mainApp)/DashBoardConfig";
 
-const GetTitleFromUrl = (title: string)=>{ 
-  const Title = title.replace('/', '');
-  
-  return Title.trim(); 
-}
 
 export default function Home() {
   return (
