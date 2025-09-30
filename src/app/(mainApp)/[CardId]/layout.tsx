@@ -1,5 +1,5 @@
 'use client'; 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useParams } from 'next/navigation'; 
 
@@ -11,7 +11,11 @@ interface LayoutPropps {
 }
 
 const Layout = ({ children }: LayoutPropps) => {
-  const {CardId} = useParams(); 
+  const { CardId } = useParams(); 
+  const CardRoot = Array.isArray(CardId)
+  ? CardId[0]
+  : (CardId as string).split("/")[0]
+  
   return (
     <div className='
       col-span-4 row-span-4 
@@ -24,13 +28,13 @@ const Layout = ({ children }: LayoutPropps) => {
           w-full h-fit flex flex-row 
           pl-12 gap-2 
         '>
-          <ReturnButton defaultLink={`/${CardId}`} relativeWidth={false}>
+          <ReturnButton defaultLink={`/${CardRoot}`} relativeWidth={false}>
             Graph
           </ReturnButton>
-          <ReturnButton defaultLink={`/Actions`} relativeWidth={false}>
+          <ReturnButton defaultLink={`/${CardRoot}/Actions`} relativeWidth={false}>
             Actions
           </ReturnButton>
-          <ReturnButton defaultLink={`/AuditLogs`} relativeWidth={false}>
+          <ReturnButton defaultLink={`/${CardRoot}/AuditLogs`} relativeWidth={false}>
             Audit Logs
           </ReturnButton>
         </div>
