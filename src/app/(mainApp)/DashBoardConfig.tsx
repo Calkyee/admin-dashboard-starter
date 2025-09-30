@@ -16,13 +16,13 @@ interface DashBoardConfigProps {
 }
 
 const DashBoardConfig: DashBoardConfigProps[] = [ 
-  {CardCol: 1, CardRow: 1, Title: 'TITLE',  DetailPageUrl: '/1',  Component: <BarGraphCard useMockData={true}/>}, 
-  {CardCol: 1, CardRow: 1, DetailPageUrl: '/',  Component: <LineGraphCard useMockData={true}/>}, 
-  {CardCol: 1, CardRow: 1, DetailPageUrl: '/', Component: <StepGraphCard useMockData={true}/>}, 
-  {CardCol: 1, CardRow: 1, DetailPageUrl: '/',  Component: <PieChartCard useMockData={true}/>}, 
-  {CardCol: 2, CardRow: 1, DetailPageUrl: '/', Component: <SideBarGraphCard useMockData={true} />}, 
+  {CardCol: 1, CardRow: 1, Title: 'Current Users',  DetailPageUrl: '/CurrentUsers',  Component: <BarGraphCard useMockData={true}/>}, 
+  {CardCol: 1, CardRow: 1, Title: 'User Growth Over 7 Days',  DetailPageUrl: '/UserGrowth7Days',  Component: <LineGraphCard useMockData={true}/>}, 
+  {CardCol: 1, CardRow: 1, Title: 'Recent Users Deleted', DetailPageUrl: '/', Component: <StepGraphCard useMockData={true}/>}, 
+  {CardCol: 1, CardRow: 1, Title: 'Active Sessions',  DetailPageUrl: '/SessionTracking',  Component: <PieChartCard useMockData={true}/>}, 
+  {CardCol: 2, CardRow: 1, Title: 'Current Requests',  DetailPageUrl: '/RequestTracking', Component: <SideBarGraphCard useMockData={true} />}, 
   {CardCol: 2, CardRow: 2, Component: <CreateReadUpdateDeleteChart useMockData={true}/>}, 
-  {CardCol: 2, CardRow: 1, DetailPageUrl: '/', Component: <HeatMapCard useMockData={true}/>}, 
+  {CardCol: 2, CardRow: 1, Title: 'User Count', DetailPageUrl: '/UserTracking', Component: <HeatMapCard useMockData={true}/>}, 
   {CardCol: 2, CardRow: 1, Component: <div></div> },
   {CardCol: 2, CardRow: 1, Component: <div></div> }
 ]
