@@ -18,31 +18,39 @@ const Layout = ({ children }: LayoutPropps) => {
   
   return (
     <div className='
-      col-span-4 row-span-4 
-            
-      bg-white shadow rounded
+      col-span-4 row-span-4
+      bg-white rounded shadow 
     '>
-        <div className='w-full h-fit flex flex-col '>
-          <Title>TITLE</Title>
+      <div className='
+        w-full 
+        min-h-fit h-2/12
+
+        flex flex-col 
+      '>
+        <Title>Title</Title>
         <div className='
-          w-full h-fit flex flex-row 
-          pl-12 gap-2 
+          w-full h-fit 
+          flex flex-row gap-4
+          pl-5 
         '>
-          <ReturnButton defaultLink={`/${CardRoot}`} relativeWidth={false}>
+          <ReturnButton relativeWidth={false} defaultLink='/'>
             Graph
           </ReturnButton>
-          <ReturnButton defaultLink={`/${CardRoot}/Actions`} relativeWidth={false}>
+          <ReturnButton relativeWidth={false} defaultLink='/Actions'>
             Actions
           </ReturnButton>
-          <ReturnButton defaultLink={`/${CardRoot}/AuditLogs`} relativeWidth={false}>
+          <ReturnButton relativeWidth={false} defaultLink='/AdutiLogs'>
             Audit Logs
           </ReturnButton>
         </div>
+
       </div>
       <div className='
-        w-full  h-full 
+        w-full h-10/12 
       '>
-        {children}
+        { 
+          children
+        }
       </div>
     </div>
   )
