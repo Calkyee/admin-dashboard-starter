@@ -10,6 +10,17 @@ interface LayoutPropps {
   children: React.ReactNode
 }
 
+interface NavItemInterface { 
+  label: "Graph" | "Actions" | "Audit Logs"; 
+  path: "" | "Actions" | "AuditLogs"
+}
+
+const navItems: NavItemInterface[] = [ 
+  {label: 'Actions', path: 'Actions'}, 
+  {label: 'Audit Logs', path: 'AuditLogs'}, 
+  {label: 'Graph', path: ''} 
+]; 
+
 const Layout = ({ children }: LayoutPropps) => {
   const { CardId } = useParams(); 
   const CardRoot = Array.isArray(CardId)
@@ -33,15 +44,17 @@ const Layout = ({ children }: LayoutPropps) => {
           flex flex-row gap-4
           pl-5 
         '>
-          <ReturnButton relativeWidth={false} defaultLink={`/${CardRoot}`}>
-            Graph
-          </ReturnButton>
-          <ReturnButton relativeWidth={false} defaultLink={`/${CardRoot}/Actions`}>
-            Actions
-          </ReturnButton>
-          <ReturnButton relativeWidth={false} defaultLink={`/${CardRoot}/AuditLogs`}>
-            Audit Logs
-          </ReturnButton>
+          { 
+            navItems.map(({label, path})=>( 
+              <ReturnButton 
+                key={label}
+                relativeWidth={false}
+                defaultLink={`/${CardRoot}/${path}`}
+              >
+                {label}
+              </ReturnButton>
+            ))
+          }
         </div>
 
       </div>
