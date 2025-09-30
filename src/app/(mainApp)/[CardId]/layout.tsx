@@ -33,13 +33,13 @@ const Layout = ({ children }: LayoutPropps) => {
           flex flex-row gap-4
           pl-5 
         '>
-          <ReturnButton relativeWidth={false} defaultLink='/'>
+          <ReturnButton relativeWidth={false} defaultLink={`/${CardRoot}`}>
             Graph
           </ReturnButton>
-          <ReturnButton relativeWidth={false} defaultLink='/Actions'>
+          <ReturnButton relativeWidth={false} defaultLink={`/${CardRoot}/Actions`}>
             Actions
           </ReturnButton>
-          <ReturnButton relativeWidth={false} defaultLink='/AdutiLogs'>
+          <ReturnButton relativeWidth={false} defaultLink={`/${CardRoot}/AuditLogs`}>
             Audit Logs
           </ReturnButton>
         </div>
