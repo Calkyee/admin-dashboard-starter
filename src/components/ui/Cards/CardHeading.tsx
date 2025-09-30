@@ -9,7 +9,6 @@ interface CardHeadingProps {
 
 
 const CardHeading = ({children, DetailPageUrl}: CardHeadingProps) => {
-  const [isViewMoreActive, setIsViewMoreActive] = useState(false); 
 
   return (
     <div className='
