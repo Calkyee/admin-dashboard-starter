@@ -16,16 +16,20 @@ interface NavItemInterface {
 }
 
 const navItems: NavItemInterface[] = [ 
+  {label: 'Graph', path: ''}, 
   {label: 'Actions', path: 'Actions'}, 
   {label: 'Audit Logs', path: 'AuditLogs'}, 
-  {label: 'Graph', path: ''} 
 ]; 
 
 const Layout = ({ children }: LayoutPropps) => {
   const { CardId } = useParams(); 
   const CardRoot = Array.isArray(CardId)
   ? CardId[0]
-  : (CardId as string).split("/")[0]
+  : (CardId as string).split("/")[0]; 
+
+  const splitCamelCase = (text: string)=>{ 
+    return text.replace(/([a-z])([A-Z])/, '$1 $2');
+  }
   
   return (
     <div className='
@@ -38,7 +42,7 @@ const Layout = ({ children }: LayoutPropps) => {
 
         flex flex-col 
       '>
-        <Title>Title</Title>
+        <Title>{splitCamelCase(CardRoot)}</Title>
         <div className='
           w-full h-fit 
           flex flex-row gap-4
