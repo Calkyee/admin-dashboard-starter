@@ -28,7 +28,9 @@ const Layout = ({ children }: LayoutPropps) => {
   : (CardId as string).split("/")[0]; 
 
   const splitCamelCase = (text: string)=>{ 
-    return text.replace(/([a-z])([A-Z])/, '$1 $2');
+    return text
+      .replace(/([a-z])([A-Z0-9])/g, '$1 $2')
+      .replace(/([0-9])([A-Z])/g, '$1 $2'); 
   }
   
   return (
